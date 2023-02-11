@@ -1,0 +1,15 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  postgres-db:
+    container_name: srv-postgres
+    image: postgres:alpine3.17
+    restart: always
+    environment:
+      POSTGRES_DB: SUICOMBDD
+      POSTGRES_PASSWORD: adminpgsql
+    ports:
+      - 5432:5432
+    volumes:
+      - /Users/fnarsiste/Projects/web/suivicomptes/db:/var/lib/postgresql/data
