@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/administration/banques/")
+@RequestMapping("/administration/banques")
 public class BanqueController extends BaseController<Banque> {
     private static final Log log= LogFactory.getLog(BanqueController.class);
     @Autowired
@@ -37,13 +37,11 @@ public class BanqueController extends BaseController<Banque> {
         return "admin/banques/form";
     }
 
-
-
     @Override
     @PostMapping("/enregistrer")
     public String update(Model model, Banque entity) {
         banqueService.save(entity);
-        log.info("Code: " + entity.getCode() + "; Libelle: " + entity.getLibelle() + "; Adresse:" + entity.getAdresse());
+       // log.info("Code: " + entity.getCode() + "; Libelle: " + entity.getLibelle() + "; Adresse:" + entity.getAdresse());
         return "redirect:liste";
     }
 
@@ -63,12 +61,9 @@ public class BanqueController extends BaseController<Banque> {
     @Override
     @GetMapping({"/", "/liste"})
     public String showListe(Model model) {
-        /*
-         *
-         * */
         List<Banque> banques=banqueService.findAll();
         model.addAttribute("List", banques);
-        return "/admin/banques/liste";
+        return "admin/banques/liste";
     }
 
     @Override
@@ -78,7 +73,6 @@ public class BanqueController extends BaseController<Banque> {
 
     @Override
     public Banque getById(Long id) {
-        //toto
         return banqueService.findById(id);
     }
 }
