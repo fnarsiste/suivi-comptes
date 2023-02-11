@@ -17,6 +17,12 @@
       {
         "aria-progressbar-name": "off"
       }
+    ],
+    "axe/text-alternatives": [
+      "default",
+      {
+        "document-title": "off"
+      }
     ]
   }
 }
