@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="statuts")
-public class Statut extends NamedEntity implements Serializable {
+public class Statut extends NamedEntity {
     String codeStatut;
 
 }

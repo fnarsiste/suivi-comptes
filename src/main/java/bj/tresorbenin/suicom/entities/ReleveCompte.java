@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="releves_comptes")
-public class ReleveCompte extends BaseEntity implements Serializable {
+public class ReleveCompte extends BaseEntity {
     String numReleve;
     String solde;
     String date;

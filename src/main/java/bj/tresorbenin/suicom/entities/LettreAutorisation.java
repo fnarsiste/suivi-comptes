@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="autorisations")
-public class LettreAutorisation extends BaseEntity implements Serializable {
+public class LettreAutorisation extends BaseEntity {
     String refLettre;
     String objet;
     String dateLettre;

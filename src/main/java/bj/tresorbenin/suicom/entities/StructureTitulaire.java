@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="structures_titulaires")
-public class StructureTitulaire extends NamedEntity implements Serializable {
+public class StructureTitulaire extends NamedEntity {
     String codeStruct;
     String adress;
 

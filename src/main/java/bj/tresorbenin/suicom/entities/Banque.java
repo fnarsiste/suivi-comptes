@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,7 +11,8 @@ import java.io.Serializable;
 @Entity
 @Table(name="banques")
 @Data
-public class Banque extends NamedEntity implements Serializable {
+@EqualsAndHashCode(callSuper=false)
+public class Banque extends NamedEntity {
     String code;
     String adresse;
 }

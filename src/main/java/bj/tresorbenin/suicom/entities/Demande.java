@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="demandes")
-public class Demande extends BaseEntity implements Serializable {
+public class Demande extends BaseEntity {
         String refDem;
         String objet;
         String dateDem;
