@@ -1,66 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/headers.html :: htmlHeader}"><meta charset="utf-8"></head>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{mainlayout.html}">
+<head><title>Liste des banques</title></head>
 <body class="fixed-left">
-<!-- Loader -->
-<div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+<section layout:fragment="core-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
 
-<div id="wrapper">
-    <div th:replace="~{fragments/leftmenu.html :: leftSideMenu}" class="left side-menu">Le menu latéral est placé ici</div>
-    <div class="content-page">
-        <div class="content">
-            <div th:replace="~{fragments/topbar.html :: topBar}" class="topbar">Ici repose la top bar</div>
-            <div class="page-content-wrapper ">
-                <div class="container-fluid">
-                    <div th:replace="~{fragments/topbar.html :: breadCrumbs(title=${'Liste des banques'}, bread=${'Banques'})}" class="row"></div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-    
-                                    <h4 class="mt-0 header-title">
-                                        <!-- <a class="btn btn-success" href="/administration/banques/nouveau" role="button">Ajouter</a>-->
-                                        <a th:href="@{/administration/banques/nouveau}" class="btn btn-primary mb-2">Ajouter</a>
-                                    </h4>
+                    <h4 class="mt-0 header-title">
+                        <!-- <a class="btn btn-success" href="/administration/banques/nouveau" role="button">Ajouter</a>-->
+                        <a th:href="@{/administration/banques/nouveau}" class="btn btn-primary mb-2">Ajouter</a>
+                    </h4>
 
-    
-                                    <table id="datatable-buttons" class="table table-striped table-bordered w-100">
-                                        <thead>
-                                        <tr>
 
-                                            <th>Code</th>
-                                            <th>Dénomination</th>
-                                            <th>Adresse</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="banq : ${List}">
-                                                <td th:text="${banq.code}">ABC</td>
-                                                <td th:text="${banq.libelle}">Banque Fiction</td>
-                                                <td th:text="${banq.adresse}">Cotonou</td>
-                                                <td style="white-space: nowrap; width: 15%;">
-                                                    <div class="btn-group btn-group-sm" style="float: none;">
-                                                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{/administration/banques/modifier(banqueId=${banq.id})}"><span class="ti-pencil"></span></a>
-                                                        <a class="tabledit-delete-button btn btn-sm btn-danger ml-2" style="float: none; margin: 5px;" th:href="@{/administration/banques/supprimer(banqueId=${banq.id})}"><span class="ti-trash"></span></a>
-                                                    </div>
+                    <table id="datatable-buttons" class="table table-striped table-bordered w-100">
+                        <thead>
+                        <tr>
 
-                                                </td>
-                                            </tr>
+                            <th>Code</th>
+                            <th>Dénomination</th>
+                            <th>Adresse</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="banq : ${List}">
+                                <td th:text="${banq.code}">ABC</td>
+                                <td th:text="${banq.libelle}">Banque Fiction</td>
+                                <td th:text="${banq.adresse}">Cotonou</td>
+                                <td style="white-space: nowrap; width: 15%;">
+                                    <div class="btn-group btn-group-sm" style="float: none;">
+                                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{/administration/banques/modifier(banqueId=${banq.id})}"><span class="ti-pencil"></span></a>
+                                        <a class="tabledit-delete-button btn btn-sm btn-danger ml-2" style="float: none; margin: 5px;" th:href="@{/administration/banques/supprimer(banqueId=${banq.id})}"><span class="ti-trash"></span></a>
+                                    </div>
 
-                                        </tbody>
-                                    </table>
-    
-                                </div>
-                            </div>
-                        </div> <!-- end col -->
-                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
-        </div>
-        <footer th:replace="~{fragments/headers.html :: footerSite}" class="footer">Pied du site</footer>
+        </div> <!-- end col -->
     </div>
-</div>
-<section th:replace="~{fragments/headers.html :: footerAssests}">Les scripts de fin de page</section>
+</section>
 </body>
 </html>

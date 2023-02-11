@@ -1,71 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/headers.html :: htmlHeader}"><meta charset="utf-8"></head>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{mainlayout.html}">
+    <head><title>Nouvelle banque</title></head>
 <body class="fixed-left">
-<!-- Loader -->
-<div id="preloader"><div id="status"><div class="spinner"></div></div></div>
-
-<div id="wrapper">
-    <div th:replace="~{fragments/leftmenu.html :: leftSideMenu}" class="left side-menu">Le menu latéral est placé ici</div>
-    <div class="content-page">
-        <div class="content">
-            <div th:replace="~{fragments/topbar.html :: topBar}" class="topbar">Ici repose la top bar</div>
-            <div class="page-content-wrapper ">
-                <div class="container-fluid">
-                    <div th:replace="~{fragments/topbar.html :: breadCrumbs(title=${'Créer une nouvelle banque'}, bread=${'Banques'})}" class="row"></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <form class="" method="POST" th:action="@{/administration/banques/enregistrer}" th:object="${entity}">
-                                        <div class="form-group mb-0 row">
-                                            <div><label class="my-2 py-1">Code : </label></div>
-                                            <div>
-                                                <input type="text" th:field="*{code}"
-                                                        class="form-control col-6 mb-6" required
-                                                        placeholder="Entrer le code de la Banque"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mb-0 row">
-                                            <label class="my-2 py-1">Dénomination :</label>
-                                            <div>
-                                                <input  type="text" th:field="*{libelle}"
-                                                       class="form-control col-6 mb-6" required
-                                                       placeholder="Entrer la dénomination de la Banque"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="my-2 py-1">Adresse : </label>
-                                            <div>
-                                                <textarea th:field="*{adresse}" required class="form-control col-6 mb-6" rows="5" placeholder="Entrer l'adresse de la Banque"></textarea>
-                                            </div>
-                                        </div>
-                                        <div><input type="hidden" th:field="*{id}"/></div>
-                                        <div class="form-group mb-0">
-                                            <div>
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                    Submit
-                                                </button>
-                                                <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                                    Cancel
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <hr/>
-                                    <a th:href="@{/administration/banques/liste}">Retour à la liste</a>
-
-                                </div>
+<section layout:fragment="core-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="" method="POST" th:action="@{/administration/banques/enregistrer}" th:object="${entity}">
+                        <div class="form-group mb-0 row">
+                            <div><label class="my-2 py-1">Code : </label></div>
+                            <div>
+                                <input type="text" th:field="*{code}"
+                                        class="form-control col-6 mb-6" required
+                                        placeholder="Entrer le code de la Banque"/>
                             </div>
-                        </div> <!-- end col -->
-
-                    </div>
+                        </div>
+                        <div class="form-group mb-0 row">
+                            <label class="my-2 py-1">Dénomination :</label>
+                            <div>
+                                <input  type="text" th:field="*{libelle}"
+                                       class="form-control col-6 mb-6" required
+                                       placeholder="Entrer la dénomination de la Banque"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="my-2 py-1">Adresse : </label>
+                            <div>
+                                <textarea th:field="*{adresse}" required class="form-control col-6 mb-6" rows="5" placeholder="Entrer l'adresse de la Banque"></textarea>
+                            </div>
+                        </div>
+                        <div><input type="hidden" th:field="*{id}"/></div>
+                        <div class="form-group mb-0">
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr/>
+                    <a th:href="@{/administration/banques/liste}">Retour à la liste</a>
                 </div>
             </div>
         </div>
-        <footer th:replace="~{fragments/headers.html :: footerSite}" class="footer">Pied du site</footer>
     </div>
-</div>
-<section th:replace="~{fragments/headers.html :: footerAssests}">Les scripts de fin de page</section>
+</section>
 </body>
 </html>

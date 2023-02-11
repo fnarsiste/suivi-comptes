@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" 
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
    <head th:fragment="htmlHeader">
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta
          name="viewport"
-         content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
+         content="width=device-width, initial-scale=1.0, user-scalable=0"
       />
-      <title>Suivi des comptes hors CUT | Trésor Public</title>
+      <title th:text="|Suivi des comptes - ${CONTENT_TITLE}|"></title>
       <meta
          content="Application web de suivi des comptes dans les banques commerciales"
          name="description"
