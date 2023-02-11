@@ -2,13 +2,28 @@
 <html lang="en" 
    xmlns:th="http://www.thymeleaf.org"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title layout:title-pattern="$LAOYUT_TITLE - $CONTENT_TITLE">Suivi Comptes App</title>
-</head>
-<body>
+<head th:replace="~{fragments/headers.html :: htmlHeader}"><meta charset="utf-8"></head>
+<body class="fixed-left">
+   <!-- Loader -->
+   <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
    
-</body>
-</html>
+   <div id="wrapper">
+       <div th:replace="~{fragments/leftmenu.html :: leftSideMenu}" class="left side-menu">Le menu latéral est placé ici</div>
+       <div class="content-page">
+           <div class="content">
+               <div th:replace="~{fragments/topbar.html :: topBar}" class="topbar">Ici repose la top bar</div>
+               <div class="page-content-wrapper ">
+                   <div class="container-fluid">
+                       <div th:replace="~{fragments/topbar.html :: breadCrumbs(title=${'Tableau de bord'}, bread=${'Dashboard'})}" class="row"></div>
+                       <section layout:fragment="core-content">
+                        Le corps du site se trouve ici.
+                       </section>
+                   </div>
+               </div>
+           </div>
+           <footer th:replace="~{fragments/headers.html :: footerSite}" class="footer">Pied du site</footer>
+       </div>
+   </div>
+   <section th:replace="~{fragments/headers.html :: footerAssests}">Les scripts de fin de page</section>
+   </body>
+   </html>
