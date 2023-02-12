@@ -3,24 +3,16 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{mainlayout.html}">
-<head><title>Liste des banques</title></head>
-<body class="fixed-left">
+<body >
 <section layout:fragment="core-content">
+    <div class="row" th:replace="~{fragments/includes.html :: newEntityButtonArea}"></div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
-                    <h4 class="mt-0 header-title">
-                        <!-- <a class="btn btn-success" href="/administration/banques/nouveau" role="button">Ajouter</a>-->
-                        <a th:href="@{/administration/banques/nouveau}" class="btn btn-primary mb-2">Ajouter</a>
-                    </h4>
-
-
                     <table id="datatable-buttons" class="table table-striped table-bordered w-100">
                         <thead>
                         <tr>
-
                             <th>Code</th>
                             <th>Dénomination</th>
                             <th>Adresse</th>
@@ -37,17 +29,22 @@
                                         <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{/administration/banques/modifier(banqueId=${banq.id})}"><span class="ti-pencil"></span></a>
                                         <a class="tabledit-delete-button btn btn-sm btn-danger ml-2" style="float: none; margin: 5px;" th:href="@{/administration/banques/supprimer(banqueId=${banq.id})}"><span class="ti-trash"></span></a>
                                     </div>
-
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
-
+                </div>
+                <div class="card-footer">
+                    Notes : 
                 </div>
             </div>
-        </div> <!-- end col -->
+        </div>
     </div>
+    <script>
+        function runOnceAllLoaded() {
+            console.log("Liste des banques chargées.");
+        }
+    </script>
 </section>
 </body>
 </html>

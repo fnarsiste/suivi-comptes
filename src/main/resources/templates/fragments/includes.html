@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Includes fragements</title>
+</head>
+<body>
+   <div th:fragment="newEntityButtonArea" class="row">
+      <div class="col-lg-12">
+         <div class="card">
+             <div class="card-body">
+                 <a th:href="@{/administration/banques/nouveau}" class="btn btn-info mb-0">
+                     <i class="mdi mdi-file-document"></i> Créer une nouvelle ligne
+                 </a>
+             </div>
+         </div>
+     </div>
+   </div>
+
+   <div th:fragment="formRequiredArea" class="row">
+      <div class="col-lg-12">
+         <div class="alert alert-info">
+            Tous les champs suivis d'asterisques (<b style="color: red;">*</b>) sont obligatires
+         </div>
+     </div>
+   </div>
+</body>
+</html>
