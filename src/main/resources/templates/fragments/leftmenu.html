@@ -42,7 +42,7 @@
                       <ul class="list-unstyled">
                           <li><a th:href="@{/administration/profil}"> Profil utilisateur</a></li>
                           <li><a th:href="@{/administration/reset-password}"> Changer mot de passe</a></li>
-                          <li><a th:href="@{/administration/logout}"> Déconnexion</a></li>
+                          <li><a th:data-contextpath="${@environment.getProperty('server.servlet.context-path')}" class="js-button-logout" th:href="@{/administration/logout}"> Déconnexion</a></li>
                       </ul>
                   </li>
               </ul>
