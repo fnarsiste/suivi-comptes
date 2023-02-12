@@ -46,7 +46,6 @@
                       <a href="javascript:void(0);" class="dropdown-item notify-item">
                           View All
                       </a>
-
                   </div>
               </li>
 
@@ -81,21 +80,20 @@
 
           <div class="clearfix"></div>
       </nav>
-  </div>
-
-  <div th:fragment="breadCrumbs(title, bread)"  class="row">
-   <div class="col-sm-12">
-       <div class="page-title-box">
-           <div class="btn-group float-right">
-               <ol class="breadcrumb hide-phone p-0 m-0">
-                   <li class="breadcrumb-item"><a href="#">Administration</a></li>
-                   <li class="breadcrumb-item active" th:text="${bread}">...</li>
-               </ol>
-           </div>
-           <h4 class="page-title" th:text="${CONTENT_TITLE}">...</h4>
-       </div>
    </div>
-   <div class="clearfix"></div>
-</div>
+   <div th:fragment="breadCrumbs(bread)"  class="row">
+      <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="btn-group float-right">
+                <ol class="breadcrumb hide-phone p-0 m-0">
+                    <li class="breadcrumb-item"><a href="#">Administration</a></li>
+                    <li class="breadcrumb-item active" th:text="${bread}">...</li>
+                </ol>
+            </div>
+            <h4 class="page-title" th:text="${CONTENT_TITLE}">...</h4>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+   </div>
 </body>
 </html>

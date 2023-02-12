@@ -2,28 +2,36 @@
 <html lang="en" 
    xmlns:th="http://www.thymeleaf.org"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="~{fragments/headers.html :: htmlHeader}"><meta charset="utf-8"></head>
+<head th:replace="~{fragments/headers.html :: htmlHeader(scope='pages')}">
+    <meta charset="utf-8">
+</head>
 <body class="fixed-left">
-   <!-- Loader -->
    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
-   
    <div id="wrapper">
-       <div th:replace="~{fragments/leftmenu.html :: leftSideMenu}" class="left side-menu">Le menu latéral est placé ici</div>
+       <div th:replace="~{fragments/leftmenu.html :: leftSideMenu}" class="left side-menu">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolores mollitia tenetur commodi maxime! Eligendi mollitia excepturi, iure facilis animi hic totam adipisci sint assumenda aliquam dolorem iusto quisquam molestiae.
+       </div>
        <div class="content-page">
            <div class="content">
-               <div th:replace="~{fragments/topbar.html :: topBar}" class="topbar">Ici repose la top bar</div>
+               <div th:replace="~{fragments/topbar.html :: topBar}" class="topbar">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, laudantium labore. Doloremque rem eaque nulla suscipit, commodi ipsum, a ad illum beatae maxime repellat! Ab non sed dolor numquam sunt!
+               </div>
                <div class="page-content-wrapper ">
                    <div class="container-fluid">
-                       <div th:replace="~{fragments/topbar.html :: breadCrumbs(title=${'Tableau de bord'}, bread=${'Dashboard'})}" class="row"></div>
+                       <div th:replace="~{fragments/topbar.html :: breadCrumbs(bread=${'Dashboard'})}" class="row"></div>
                        <section layout:fragment="core-content">
-                        Le corps du site se trouve ici.
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque vero qui aut at aspernatur ex inventore quia repellendus nostrum omnis? Minima earum, cum aut odio sapiente fugit fugiat itaque ab!
                        </section>
                    </div>
                </div>
            </div>
-           <footer th:replace="~{fragments/headers.html :: footerSite}" class="footer">Pied du site</footer>
+           <footer th:replace="~{fragments/headers.html :: footerSite}" class="footer">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vero similique ab pariatur debitis tenetur perspiciatis modi commodi dolore neque provident, est exercitationem dicta dolores? Accusamus eum maiores nostrum consequuntur!
+           </footer>
        </div>
    </div>
-   <section th:replace="~{fragments/headers.html :: footerAssests}">Les scripts de fin de page</section>
+   <section th:replace="~{fragments/headers.html :: footerAssests}">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error facilis, reprehenderit, distinctio adipisci tenetur vel expedita ipsum voluptas architecto rem neque, asperiores praesentium quod beatae earum ab quasi odit libero.
+    </section>
    </body>
    </html>
