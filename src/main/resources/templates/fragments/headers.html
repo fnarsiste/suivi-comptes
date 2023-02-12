@@ -95,37 +95,7 @@
         <script th:src="@{/assets/plugins/datatables/responsive.bootstrap4.min.js}"></script>
 
          <script th:src="@{/assets/js/app.js}"></script>
-
-         <script>
-            $(document).ready(function(){
-               $('#datatable2').DataTable({
-                  lg: LANG
-               }); 
-               // Initalize data table with buttons
-               const table = $('#datatable-buttons').DataTable({
-                  lengthChange: !true,
-                  buttons: ['copy', 'excel', 'pdf'], //, 'colvis'],
-                  language: LANG
-               });
-               table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
-
-               $('.js-button-logout').on('click', function(e) {
-                  e.preventDefault();
-                  const {contextpath} = $(this).data();
-                  swal({
-                     title: "Suivi Compte!",
-                     text: `Voulez-vous réellement quitter l'application ?`,
-                     icon: "warning",
-                     buttons: ['Continuez', 'Quittez'],
-                     dangerMode: true,
-                  }).then((canExit) => {
-                     if (canExit) {
-                        document.location.href = contextpath;
-                     }
-                  });
-               });
-            });
-         </script>
+         <script th:src="@{/assets/js/commons.js}"></script>
       </section>
    </body>
 </html>
