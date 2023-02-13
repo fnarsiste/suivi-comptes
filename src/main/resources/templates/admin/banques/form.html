@@ -7,7 +7,7 @@
 <body class="fixed-left">
 <section layout:fragment="core-content">
     <div class="row" th:replace="~{fragments/includes.html :: formRequiredArea}"></div>
-    <form class="" method="POST" th:action="@{/administration/banques/enregistrer}" th:object="${entity}">
+    <form class="" method="POST" th:action="@{/referentiels/banques/enregistrer}" th:object="${entity}">
         <input type="hidden" th:field="*{id}"/>
         <div class="row">
             <div class="col-lg-12">
@@ -44,7 +44,7 @@
                                     <button type="submit" class="col-lg-2 btn btn-primary waves-effect waves-light">
                                         Enregistrer
                                     </button>
-                                    <a class="col-lg-2 btn btn-secondary waves-effect m-l-5" th:href="@{/administration/banques/liste}">Fermer</a>
+                                    <a class="col-lg-2 btn btn-secondary waves-effect m-l-5" th:href="@{/referentiels/banques/liste}">Fermer</a>
                                 </div>
                             </div>
                         </div>
