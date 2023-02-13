@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@SuppressWarnings("all")
 @RequestMapping("/{APP_module:referentiels}/{APP_directory:banques}")
-//public class BanqueController extends MasterController<Banque> { //} extends BaseController<Banque> {
 public class BanqueController extends BaseController<Banque> {
-    private BanqueService banqueService;
+    private final BanqueService banqueService;
 
     public BanqueController(BanqueService banqueService) {
         super();
