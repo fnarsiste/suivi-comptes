@@ -2,6 +2,7 @@ package bj.tresorbenin.suicom.controllers;
 
 import org.springframework.ui.Model;
 
+@SuppressWarnings("all")
 public abstract class BaseController <T>{
     public abstract String showCreateOrUpdateForm(Model model, T entity);
 
@@ -9,7 +10,7 @@ public abstract class BaseController <T>{
 
     public abstract String update(Model model, T entity);
 
-    public abstract String delete(Model model, T entity);
+    protected abstract String delete(Model model, T entity);
 
     public abstract String delete(Model model, Long id);
     public abstract String showListe(Model model);

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@SuppressWarnings("all")
 public class LoginController {
     @GetMapping("/")
     public String home(){
@@ -14,6 +15,6 @@ public class LoginController {
     @GetMapping("/administration/dashboard")
     public String dashboard(Model model){
         model.addAttribute("CONTENT_TITLE", "Tableau de bord");
-        return "admin/dashboard";
+        return "dashboard";
     }
 }

@@ -21,12 +21,21 @@ public class BanqueController extends BaseController<Banque> {
     }
 
     @Override
+    @GetMapping({"/", "/liste"})
+    public String showListe(Model model) {
+        List<Banque> banques=banqueService.findAll();
+        model.addAttribute("CONTENT_TITLE", "Liste des banques");
+        model.addAttribute("List", banques);
+        return "referentiels/banques/liste";
+    }
+
+    @Override
     @GetMapping("/nouveau")
     public String showCreateOrUpdateForm(Model model, Banque entity) {
         entity=new Banque();
         model.addAttribute("CONTENT_TITLE", "Nouvelle banque");
         model.addAttribute("entity", entity);
-        return "admin/banques/form";
+        return "referentiels/banques/form";
     }
 
     @Override
@@ -36,7 +45,7 @@ public class BanqueController extends BaseController<Banque> {
         if(banqueId!=null)
             entity=getById(banqueId);
         model.addAttribute("entity",entity);
-        return "admin/banques/form";
+        return "referentiels/banques/form";
     }
 
     @Override
@@ -44,11 +53,6 @@ public class BanqueController extends BaseController<Banque> {
     public String update(Model model, Banque entity) {
         banqueService.save(entity);
        // log.info("Code: " + entity.getCode() + "; Libelle: " + entity.getLibelle() + "; Adresse:" + entity.getAdresse());
-        return "redirect:liste";
-    }
-
-    public String delete(Model model, Banque entity) {
-        banqueService.delete(entity);
         return "redirect:liste";
     }
 
@@ -60,12 +64,9 @@ public class BanqueController extends BaseController<Banque> {
     }
 
     @Override
-    @GetMapping({"/", "/liste"})
-    public String showListe(Model model) {
-        List<Banque> banques=banqueService.findAll();
-        model.addAttribute("CONTENT_TITLE", "Liste des banques");
-        model.addAttribute("List", banques);
-        return "admin/banques/liste";
+    protected String delete(Model model, Banque entity) {
+        banqueService.delete(entity);
+        return "redirect:liste";
     }
 
     @Override
