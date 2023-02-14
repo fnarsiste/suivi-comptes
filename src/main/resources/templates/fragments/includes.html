@@ -11,8 +11,8 @@
       <div class="col-lg-12">
          <div class="card">
              <div class="card-body">
-                 <a th:href="@{/referentiels/banques/nouveau}" class="btn btn-info mb-0">
-                     <i class="mdi mdi-file-document"></i> Créer une nouvelle ligne
+                 <a th:href="@{${LIEN_CREATE}}" class="btn btn-info mb-0">
+                     <i class="mdi mdi-file-document"></i> <span th:utext="#{${lbl_ajouter}}"></span>
                  </a>
              </div>
          </div>
@@ -25,6 +25,19 @@
             Tous les champs suivis d'asterisques (<b style="color: red;">*</b>) sont obligatires
          </div>
      </div>
+   </div>
+
+   <div th:fragment="formButtonsArea(offset)" class="card-footer">
+       <div class="js-error-block alert alert-danger text-center" style="font-size: 1.2rem; display: none;"></div>
+       <div class="row">
+           <div th:class="|col-lg-${offset}|"></div>
+           <div th:class="|form-group mb-0 col-lg-${12 - offset}|">
+               <div>
+                   <button type="submit" th:utext="#{${lbl_add_btn}}" class="col-lg-2 btn btn-primary waves-effect waves-light">Save it</button>
+                   <a class="col-lg-2 btn btn-secondary waves-effect m-l-5" th:href="@{|/${listeUrl}|}" th:utext="#{${lbl_close_btn}}">Close form</a>
+               </div>
+           </div>
+       </div>
    </div>
 </body>
 </html>

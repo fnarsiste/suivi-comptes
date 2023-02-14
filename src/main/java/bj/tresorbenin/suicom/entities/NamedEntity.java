@@ -14,7 +14,7 @@ import lombok.*;
 public class NamedEntity extends BaseEntity {
 
 	@Column(name = "libelle")
-	private String libelle;
+	protected String libelle;
 
 
 	@Override

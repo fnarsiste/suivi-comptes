@@ -15,6 +15,21 @@
             this.$leftMenuButton = $('.button-menu-mobile'),
             this.$menuItem = $('.has_sub > a')
     };
+    function showLoader() {
+        $('.loader-overlay').css({display: 'block'});
+        return;
+        $('#status').fadeIn();
+        $('#preloader').fadeIn();
+        $('body').css({'overflow': 'invisible'});
+    }
+    function hideLoader(duree){
+        $('.loader-overlay').css({display: 'none'});
+        return;
+        duree = duree || 0;
+        $('#status').fadeOut();
+        $('#preloader').delay(duree).fadeOut('slow');
+        $('body').delay(duree).css({'overflow': 'visible'});
+    }
     //scroll
     MainApp.prototype.initNicescroll = function () {
         $('.niceScrollleft').niceScroll({
@@ -121,13 +136,13 @@
         });
     },
     MainApp.prototype.Preloader = function () {
-        $(window).load(function() {
-            $('#status').fadeOut();
-            $('#preloader').delay(350).fadeOut('slow');
-            $('body').delay(350).css({
-                'overflow': 'visible'
-            });
-        });
+        $(window).load(function() {hideLoader(350)});
+    },
+    MainApp.prototype.Showloader = function () {
+        showLoader();
+    },
+    MainApp.prototype.Hideloader = function () {
+        hideLoader();
     },
     MainApp.prototype.init = function () {
         this.initNicescroll();

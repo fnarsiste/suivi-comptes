@@ -6,44 +6,50 @@
     <meta charset="utf-8">
 </head>
 <body class="fixed-left">
-<div id="preloader">
-    <div id="status">
-        <div class="spinner"></div>
+<div id="preloader__">
+    <div id="status__">
+        <div class="spinner__"></div>
     </div>
 </div>
+<div class="loader-overlay">
+    <div class="loader-wrapper">
+        <div class="loader">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+            <div class="bar4"></div>
+            <div class="bar5"></div>
+            <div class="bar6"></div>
+        </div>
+        <div class="loader-text">Chargement...</div>
+    </div>
+</div>
+
 <div id="wrapper">
     <div th:replace="~{fragments/leftmenu.html :: leftSideMenu}" class="left side-menu">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolores mollitia tenetur commodi maxime!
-        Eligendi mollitia excepturi, iure facilis animi hic totam adipisci sint assumenda aliquam dolorem iusto quisquam
-        molestiae.
+        Les entrées de mnenupour le site.
     </div>
     <div class="content-page">
         <div class="content">
             <div th:replace="~{fragments/topbar.html :: topBar}" class="topbar">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, laudantium labore. Doloremque rem eaque
-                nulla suscipit, commodi ipsum, a ad illum beatae maxime repellat! Ab non sed dolor numquam sunt!
+                La topbar, celle qui s'affiche sous la barre de navigation.
             </div>
             <div class="page-content-wrapper ">
                 <div class="container-fluid">
                     <div th:replace="~{fragments/topbar.html :: breadCrumbs(bread=${'Dashboard'})}" class="row"></div>
                     <section layout:fragment="core-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque vero qui aut at aspernatur ex
-                        inventore quia repellendus nostrum omnis? Minima earum, cum aut odio sapiente fugit fugiat
-                        itaque ab!
+                        Affichage du contenu principal du site.
                     </section>
                 </div>
             </div>
         </div>
         <footer th:replace="~{fragments/headers.html :: footerSite}" class="footer">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vero similique ab pariatur debitis tenetur
-            perspiciatis modi commodi dolore neque provident, est exercitationem dicta dolores? Accusamus eum maiores
-            nostrum consequuntur!
+            Le pied de page du site.
         </footer>
     </div>
 </div>
 <section th:replace="~{fragments/headers.html :: footerAssests}">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Error facilis, reprehenderit, distinctio adipisci tenetur
-    vel expedita ipsum voluptas architecto rem neque, asperiores praesentium quod beatae earum ab quasi odit libero.
+    Ici sont chargés les assets JS libraries
 </section>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" 
-   xmlns:th="http://www.thymeleaf.org"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
    <head th:fragment="htmlHeader(scope)">
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,7 +9,7 @@
       <meta name="description" content="Application web de suivi des comptes dans les banques commerciales"/>
       <meta name="author" content="Trésor Public" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <title th:text="|Suivi des comptes - ${CONTENT_TITLE}|"></title>
+      <title th:utext="|Suivi des comptes - #{${pageTitle}}|"></title>
       <link rel="shortcut icon" th:href="@{/assets/images/favicon.ico}" />
       <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css}" rel="stylesheet"/>
       <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/fullcalendar/vanillaCalendar.css}" rel="stylesheet" type="text/css"/>
@@ -22,7 +22,8 @@
 
       <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
       <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
-      <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css"/>
+       <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css"/>
+       <link th:href="@{/assets/css/custom-loader.css}" rel="stylesheet" type="text/css"/>
       <script>
          LANG = {
             "sProcessing": "Traitement en cours...",
@@ -95,7 +96,8 @@
         <script th:src="@{/assets/plugins/datatables/responsive.bootstrap4.min.js}"></script>
 
          <script th:src="@{/assets/js/app.js}"></script>
-         <script th:src="@{/assets/js/commons.js}"></script>
+          <script th:src="@{/assets/js/polyfill.js}"></script>
+          <script th:src="@{/assets/js/commons.js}"></script>
       </section>
    </body>
 </html>

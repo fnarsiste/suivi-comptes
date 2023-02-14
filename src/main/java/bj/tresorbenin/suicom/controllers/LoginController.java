@@ -14,7 +14,7 @@ public class LoginController {
 
     @GetMapping("/administration/dashboard")
     public String dashboard(Model model){
-        model.addAttribute("CONTENT_TITLE", "Tableau de bord");
+        model.addAttribute("pageTitle", "MSG.title.dashboard");
         return "dashboard";
     }
 }

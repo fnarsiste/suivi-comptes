@@ -1,8 +1,8 @@
 package bj.tresorbenin.suicom.config.thymeleaf;
-import org.springframework.context.annotation.Configuration;
 
-import org.thymeleaf.spring6.SpringTemplateEngine;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
+import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 @Configuration
 public class ThymeleafConfiguration {

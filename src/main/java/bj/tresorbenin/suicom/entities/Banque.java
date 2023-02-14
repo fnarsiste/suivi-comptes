@@ -12,7 +12,16 @@ import lombok.*;
 @Table(name="banques")
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class Banque extends NamedEntity {
+public class Banque extends NamedEntity implements Cloneable {
     String code;
     String adresse;
+
+    @Override
+    public Banque clone() {
+        try {
+            return (Banque) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

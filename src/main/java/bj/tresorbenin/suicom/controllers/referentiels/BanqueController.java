@@ -1,18 +1,21 @@
 package bj.tresorbenin.suicom.controllers.referentiels;
 
-import bj.tresorbenin.suicom.controllers.BaseController;
+import bj.tresorbenin.suicom.controllers.MasterController;
 import bj.tresorbenin.suicom.entities.Banque;
 import bj.tresorbenin.suicom.services.BanqueService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Controller
 @SuppressWarnings("all")
 @RequestMapping("/{APP_module:referentiels}/{APP_directory:banques}")
-public class BanqueController extends BaseController<Banque> {
+public class BanqueController extends MasterController<Banque> {
     private final BanqueService banqueService;
 
     public BanqueController(BanqueService banqueService) {
@@ -21,61 +24,56 @@ public class BanqueController extends BaseController<Banque> {
     }
 
     @Override
-    @GetMapping({"/", "/liste"})
-    public String showListe(Model model) {
-        List<Banque> banques=banqueService.findAll();
-        model.addAttribute("CONTENT_TITLE", "Liste des banques");
-        model.addAttribute("List", banques);
-        return "referentiels/banques/liste";
+    protected void initForm(Model model, String id) throws Exception {
+        super.initForm(model, id);
     }
 
     @Override
-    @GetMapping("/nouveau")
-    public String showCreateOrUpdateForm(Model model, Banque entity) {
-        entity=new Banque();
-        model.addAttribute("CONTENT_TITLE", "Nouvelle banque");
-        model.addAttribute("entity", entity);
-        return "referentiels/banques/form";
+    protected void showCreateForm(Model model) throws Exception {
+        pageTitle = "MSG.title.banques.create";
+        /*entity = new Banque("TEST", "Adresse de livraison");
+        entity.setLibelle("LIBELLE DE TEST");*/
     }
 
     @Override
-    @GetMapping("/modifier")
-    public String showCreateOrUpdateForm(Model model, Long banqueId) {
-        Banque entity = new Banque();
-        if(banqueId!=null)
-            entity=getById(banqueId);
-        model.addAttribute("entity",entity);
-        return "referentiels/banques/form";
+    protected void showUpdateForm(Model model, Banque entity) throws Exception {
+        pageTitle = "MSG.title.banques.edit";
     }
 
     @Override
-    @PostMapping("/enregistrer")
-    public String update(Model model, Banque entity) {
-        banqueService.save(entity);
-       // log.info("Code: " + entity.getCode() + "; Libelle: " + entity.getLibelle() + "; Adresse:" + entity.getAdresse());
-        return "redirect:liste";
+    public void showList(Model model) throws Exception {
+        pageTitle = "MSG.title.banques.list";
+        entities = banqueService.findAll();
+        super.showList(model);
     }
 
     @Override
-    @GetMapping("/supprimer")
-    public String delete(Model model, Long banqueId) {
-        banqueService.deleteById(banqueId);
-        return "redirect:liste";
+    public void insert(Model model, Banque form) throws Exception {
+        banqueService.save(form);
+        redirectView();
     }
 
     @Override
-    protected String delete(Model model, Banque entity) {
-        banqueService.delete(entity);
-        return "redirect:liste";
+    public void update(Model model, Banque form) throws Exception {
+        Banque banque = form.clone();
+        banque.setId(null);
+        delete(model, form.getId());
+        banqueService.save(banque);
     }
 
     @Override
-    public Banque getByName(String nom) {
-        return null;
+    public void delete(Model model, Object id) throws Exception {
+        banqueService.deleteById(Long.valueOf(id.toString()));
     }
 
     @Override
-    public Banque getById(Long id) {
-        return banqueService.findById(id);
+    public Banque getById(Object id) {
+        return banqueService.findById(Long.parseLong(id.toString()));
     }
+
+    @Override
+    protected void find(Model model, HttpServletRequest request, Map<String, String> params) {}
+
+    @Override
+    public void doGetCredentialsSession() {}
 }
