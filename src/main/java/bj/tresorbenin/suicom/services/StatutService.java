@@ -2,20 +2,22 @@ package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Statut;
 import bj.tresorbenin.suicom.repositories.StatutRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
-//import static bj.tresorbenin.suicom.utils.JavaUtils.stringIntoDateWithFormat;
+import static bj.tresorbenin.suicom.utils.JavaUtils.stringIntoDateWithFormat;
+
 
 @Service
+@SuppressWarnings("all")
 public class StatutService implements CrudService<Statut, Long>{
+    private final StatutRepository repo;
 
-
-    @Autowired
-    private StatutRepository repo;
+    public StatutService(StatutRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public List<Statut> findAll() {
@@ -45,7 +47,7 @@ public class StatutService implements CrudService<Statut, Long>{
     @Override
     public void beforeCreate(Statut entity) {
         entity.setDateCreation(entity.getDateCreation() == null ? new Date() : entity.getDateCreation());
-        //entity.setDateCessation(stringIntoDateWithFormat("31/12/9999", "dd/MM/yyyy"));
+        entity.setDateCessation(stringIntoDateWithFormat("31/12/9999", "dd/MM/yyyy"));
         entity.setModifierPar("N/A");
     }
 }
