@@ -5,7 +5,10 @@ import bj.tresorbenin.suicom.repositories.PieceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+
+import static bj.tresorbenin.suicom.utils.JavaUtils.stringIntoDateWithFormat;
 
 @Service
 public class PieceService implements CrudService<Piece, Long>{
@@ -37,5 +40,12 @@ public class PieceService implements CrudService<Piece, Long>{
     @Override
     public void deleteById(Long id) {
         repo.deleteById(id);
+    }
+
+    @Override
+    public void beforeCreate(Piece entity) {
+        entity.setDateCreation(entity.getDateCreation() == null ? new Date() : entity.getDateCreation());
+        entity.setDateCessation(stringIntoDateWithFormat("31/12/9999", "dd/MM/yyyy"));
+        entity.setModifierPar("N/A");
     }
 }

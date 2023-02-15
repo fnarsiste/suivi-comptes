@@ -1,38 +1,36 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Banque;
+import bj.tresorbenin.suicom.entities.Profil;
 import bj.tresorbenin.suicom.repositories.BanqueRepository;
+import bj.tresorbenin.suicom.repositories.ProfilRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
 import static bj.tresorbenin.suicom.utils.JavaUtils.stringIntoDateWithFormat;
 
-@Service
-public class BanqueService implements CrudService<Banque, Long>{
-
+public class ProfilService implements CrudService<Profil,Long>{
     @Autowired
-    private BanqueRepository repo;
-
+    private ProfilRepository repo;
     @Override
-    public List<Banque> findAll() {
+    public List<Profil> findAll() {
         return repo.findAll();
     }
 
     @Override
-    public Banque findById(Long id) {
+    public Profil findById(Long id) {
         return repo.findById(id).orElse(null);
     }
 
     @Override
-    public Banque save(Banque entity) {
+    public Profil save(Profil entity) {
         return repo.save(entity);
     }
 
     @Override
-    public void delete(Banque entity) {
+    public void delete(Profil entity) {
         deleteById(entity.getId());
     }
 
@@ -42,9 +40,9 @@ public class BanqueService implements CrudService<Banque, Long>{
     }
 
     @Override
-    public void beforeCreate(Banque entity) {
-        entity.setDateCreation(entity.getDateCreation() == null ? new Date() : entity.getDateCreation());
-        entity.setDateCessation(stringIntoDateWithFormat("31/12/9999", "dd/MM/yyyy"));
-        entity.setModifierPar("N/A");
+    public void beforeCreate(Profil entity) {
+            entity.setDateCreation(entity.getDateCreation() == null ? new Date() : entity.getDateCreation());
+            entity.setDateCessation(stringIntoDateWithFormat("31/12/9999", "dd/MM/yyyy"));
+            entity.setModifierPar("N/A");
     }
 }

@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
 
 @SuppressWarnings("all")
 public class JavaUtils {
@@ -33,26 +36,32 @@ public class JavaUtils {
         return stringValue != null && !stringValue.equals("") && !stringValue.equals("null") && !stringValue.equals("NULL") && !stringValue.equals("undefined")
                 && !stringValue.equals("UNDEFINED");
     }
+
     public static <K, E> Map<K, E> doPut(Map<K, E> map, K key, E value) {
         if (map == null)
             map = new HashMap<>();
         map.put(key, value);
         return map;
     }
+
     public static boolean setModelAttribute(Model model, String key, Object value, Object def) {
         boolean okay = value != null;
         model.addAttribute(key, okay ? value : def);
         return okay;
     }
+
     public static boolean setModelAttribute(Model model, String key, Object value) {
         return setModelAttribute(model, key, value, "");
     }
+
     public static String doNVL(String value, String defaultValue) {
         return notNullString(value) ? value : defaultValue;
     }
+
     public static <E> E getModelMapValue(Model model, String key) {
         return (E) getMapValue(model.asMap(), key);
     }
+
     public static <E> E getModelAttribute(Model model, String key) {
         return getModelMapValue(model, key);
     }
@@ -60,6 +69,7 @@ public class JavaUtils {
     public static String getMsgPropertiesValue(String propKey) {
         return getPropertiesValue(propKey, "messages.properties");
     }
+
     public static String getPropertiesValue(String propKey, String filename) {
         Properties prop = new Properties();
         InputStream input = null;
@@ -86,10 +96,30 @@ public class JavaUtils {
                 }
         }
     }
+
     public static <E> boolean notEmptyArrayList(List<E> list) {
         if (list != null && list.size() > 0)
             return true;
         else
             return false;
+    }
+
+
+    public static Date stringIntoDateWithFormat(String dateInString, String customFormat) {
+        SimpleDateFormat formatter = new SimpleDateFormat(customFormat);
+        if (dateInString != null)
+            try {
+                Date date = formatter.parse(dateInString);
+                return date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        else
+            return null;
+    }
+
+    public static Date stringIntoDateWithFormat(String dateInString) {
+        return stringIntoDateWithFormat(dateInString, "dd/MM/yyyy");
     }
 }

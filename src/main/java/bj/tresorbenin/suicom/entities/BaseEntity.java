@@ -16,6 +16,7 @@
 package bj.tresorbenin.suicom.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +34,12 @@ public class BaseEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	String code;
+
+	Date dateCreation;
+	Date dateCessation;
+	String modifierPar;
 
 	public boolean isNew() {
 		return this.id == null;
