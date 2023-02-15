@@ -28,18 +28,36 @@ public class PieceService implements CrudService<Piece, Long>{
     }
 
     @Override
-    public Piece save(Piece entity) {
+    public Piece create(Piece entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(Piece entity) {
+    public Piece update(Piece entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        //Piece banque = entity.clone(); banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(Piece entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(Piece entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override

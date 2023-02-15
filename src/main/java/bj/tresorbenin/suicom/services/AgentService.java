@@ -2,7 +2,6 @@ package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Agent;
 import bj.tresorbenin.suicom.repositories.AgentRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +19,7 @@ public class AgentService implements CrudService<Agent, Long>{
 
     @Override
     public List<Agent> findAll() {
-
         return repo.findAll();
-
-        /**
-        Set<Agent> agentSet=new HashSet<>();
-        repo.findAll().forEach(agentSet::add);
-        return agentSet;
-        */
     }
 
     @Override
@@ -36,18 +28,37 @@ public class AgentService implements CrudService<Agent, Long>{
     }
 
     @Override
-    public Agent save(Agent entity) {
+    public Agent create(Agent entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(Agent entity) {
+    public Agent update(Agent entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        Agent agent = entity.clone();
+        agent.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(Agent entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(Agent entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override

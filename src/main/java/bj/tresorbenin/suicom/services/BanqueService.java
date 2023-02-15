@@ -27,22 +27,42 @@ public class BanqueService implements CrudService<Banque, Long>{
     }
 
     @Override
-    public Banque save(Banque entity) {
+    public Banque create(Banque entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(Banque entity) {
+    public Banque update(Banque entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        Banque banque = entity.clone();
+        banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(banque);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(Banque entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(Banque entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override
     public void beforeCreate(Banque entity) {
+        entity.setSigle(entity.getSigle().toUpperCase());
         entity.setDateCreation(entity.getDateCreation() == null ? new Date() : entity.getDateCreation());
         entity.setDateCessation(stringIntoDateWithFormat("31/12/9999", "dd/MM/yyyy"));
         entity.setModifierPar("N/A");

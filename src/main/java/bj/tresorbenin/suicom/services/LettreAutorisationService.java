@@ -2,7 +2,6 @@ package bj.tresorbenin.suicom.services;
 
 
 import bj.tresorbenin.suicom.entities.LettreAutorisation;
-
 import bj.tresorbenin.suicom.repositories.LettreAutorisationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,18 +29,36 @@ public class LettreAutorisationService implements CrudService<LettreAutorisation
     }
 
     @Override
-    public LettreAutorisation save(LettreAutorisation entity) {
+    public LettreAutorisation create(LettreAutorisation entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(LettreAutorisation entity) {
+    public LettreAutorisation update(LettreAutorisation entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        //LettreAutorisation banque = entity.clone(); banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(LettreAutorisation entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(LettreAutorisation entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override

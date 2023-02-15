@@ -1,7 +1,6 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Utilisateur;
-import bj.tresorbenin.suicom.repositories.ProfilRepository;
 import bj.tresorbenin.suicom.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +12,7 @@ import static bj.tresorbenin.suicom.utils.JavaUtils.stringIntoDateWithFormat;
 public class UtilisateurService implements CrudService<Utilisateur,Long>{
     @Autowired
     private UtilisateurRepository repo;
+
     @Override
     public List<Utilisateur> findAll() {
         return repo.findAll();
@@ -24,18 +24,36 @@ public class UtilisateurService implements CrudService<Utilisateur,Long>{
     }
 
     @Override
-    public Utilisateur save(Utilisateur entity) {
+    public Utilisateur create(Utilisateur entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(Utilisateur entity) {
+    public Utilisateur update(Utilisateur entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        //Utilisateur banque = entity.clone(); banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(Utilisateur entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(Utilisateur entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override

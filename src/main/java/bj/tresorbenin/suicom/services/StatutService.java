@@ -19,6 +19,7 @@ public class StatutService implements CrudService<Statut, Long>{
         this.repo = repo;
     }
 
+
     @Override
     public List<Statut> findAll() {
         return repo.findAll();
@@ -30,18 +31,36 @@ public class StatutService implements CrudService<Statut, Long>{
     }
 
     @Override
-    public Statut save(Statut entity) {
+    public Statut create(Statut entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(Statut entity) {
+    public Statut update(Statut entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        //Statut banque = entity.clone(); banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(Statut entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(Statut entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override

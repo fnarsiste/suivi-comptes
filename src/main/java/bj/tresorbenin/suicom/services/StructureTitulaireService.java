@@ -28,18 +28,36 @@ public class StructureTitulaireService implements CrudService<StructureTitulaire
     }
 
     @Override
-    public StructureTitulaire save(StructureTitulaire entity) {
+    public StructureTitulaire create(StructureTitulaire entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(StructureTitulaire entity) {
+    public StructureTitulaire update(StructureTitulaire entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        //StructureTitulaire banque = entity.clone(); banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(StructureTitulaire entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(StructureTitulaire entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override

@@ -24,18 +24,36 @@ public class ProfilUtilisateurService implements CrudService<ProfilUtilisateur,L
     }
 
     @Override
-    public ProfilUtilisateur save(ProfilUtilisateur entity) {
+    public ProfilUtilisateur create(ProfilUtilisateur entity) {
+        beforeCreate(entity);
         return repo.save(entity);
     }
 
     @Override
-    public void delete(ProfilUtilisateur entity) {
+    public ProfilUtilisateur update(ProfilUtilisateur entity) {
+        // Conserver les modifications de l'utilisateur en clonant
+        //ProfilUtilisateur banque = entity.clone(); banque.setId(null);
+        // Ici, supprimons l'ancien de la base
         deleteById(entity.getId());
+        // Créer un nouvel enregistrement a parttir du clone
+        return create(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-        repo.deleteById(id);
+        endDelete(findById(id));
+    }
+
+    @Override
+    public void delete(ProfilUtilisateur entity) {
+        endDelete(entity);
+    }
+
+    private void endDelete(ProfilUtilisateur entity) {
+        if(entity == null) return;
+        entity.setDateCessation(new Date());
+        entity.setModifierPar("N/A");
+        repo.save(entity);
     }
 
     @Override
