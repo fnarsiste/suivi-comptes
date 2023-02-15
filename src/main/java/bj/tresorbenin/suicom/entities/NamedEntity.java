@@ -10,16 +10,15 @@ import lombok.*;
 @AllArgsConstructor
 @MappedSuperclass
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class NamedEntity extends BaseEntity {
 
-	@Column(name = "libelle")
-	protected String libelle;
+    @Column(name = "libelle", nullable = false)
+    protected String libelle;
 
-
-	@Override
-	public String toString() {
-		return this.getLibelle();
-	}
+    @Override
+    public String toString() {
+        return this.getLibelle();
+    }
 
 }

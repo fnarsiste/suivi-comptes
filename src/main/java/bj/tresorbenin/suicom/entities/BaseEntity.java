@@ -15,14 +15,11 @@
  */
 package bj.tresorbenin.suicom.entities;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.*;
 
 @MappedSuperclass
 @Getter
@@ -31,18 +28,20 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 public class BaseEntity implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "code", length = 32)
+    protected String code;
+    @Column(name = "date_creation")
+    protected Date dateCreation;
+    @Column(name = "date_cessation")
+    protected Date dateCessation;
+    @Column(name = "modifier_par")
+    protected String modifierPar;
 
-	String code;
-
-	Date dateCreation;
-	Date dateCessation;
-	String modifierPar;
-
-	public boolean isNew() {
-		return this.id == null;
-	}
+    public boolean isNew() {
+        return this.id == null;
+    }
 
 }

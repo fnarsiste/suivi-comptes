@@ -1,7 +1,6 @@
 package bj.tresorbenin.suicom.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -9,12 +8,24 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="banques")
+@Table(
+        name = "banques",
+        indexes = {
+                @Index(name = "IDX_CODE", columnList = "code"),
+                @Index(name = "IDX_LIBELLE", columnList = "libelle")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(name = "BANQUE_UK", columnNames = {"code", "sigle", "date_cessation"})
+        }
+)
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class Banque extends NamedEntity implements Cloneable {
-    String code;
-    String adresse;
+
+    @Column(nullable = false, length = 32)
+    private String sigle;
+
+    private String adresse;
 
     @Override
     public Banque clone() {

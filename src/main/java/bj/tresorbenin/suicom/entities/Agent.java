@@ -13,10 +13,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name="agents")
-public class Agent extends NamedEntity {
+public class Agent extends NamedEntity implements Cloneable {
     String matricule;
     String nom;
     String prenoms;
     String adresse;
     String mail;
+
+    @Override
+    public Agent clone() {
+        try {
+            return (Agent) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
