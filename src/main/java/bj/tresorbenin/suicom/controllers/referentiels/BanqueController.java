@@ -59,6 +59,7 @@ public class BanqueController extends MasterController<Banque> {
         banque.setId(null);
         delete(model, form.getId());
         banqueService.save(banque);
+        redirectView();
     }
 
     @Override

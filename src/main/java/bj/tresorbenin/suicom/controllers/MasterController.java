@@ -43,7 +43,7 @@ public abstract class MasterController<T> extends GlobalVars<T> {
     }
 
     @GetMapping({
-            "/{id}/{APP_ecran:modifier|liste|supprimer|search|differe}",
+            "/{id}/{APP_ecran:modifier|liste|search|differe}",
             "/{APP_ecran:nouveau|liste|search}"
     })
     public String seutp(@ModelAttribute("List") T list, BindingResult result, Model model,
@@ -54,7 +54,6 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         if(!"VALID".equals(secureLink)) return  secureLink;
         doSetFlashObject(flashObject);
         doCommonCall(model, request, HttpMethod.GET, params, "MASTER_SETUP");
-
         try {
             switch (APP_ecran) {
                 /** initialiser le formulaire de creation/modification **/
@@ -105,6 +104,25 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         return this.view;
     }
 
+    @PostMapping("/{id}/{APP_ecran:supprimer}")
+    public @ResponseBody String doDeleteRecord(
+            Model model, @PathVariable(name = "id") String id,
+            @RequestBody Map<String, String> requestBody) throws Exception {
+        JSONObject jsonResult = new JSONObject();
+        boolean success = false;
+        try {
+            delete(model, null);
+            success = true;
+            operationMsg = "Opération de suppression effecuée avec succès.";
+        } catch (Exception e) {
+            e.printStackTrace();
+            operationMsg = String.format("Une s'est produite lors de la suppression<hr>%s - %s", e.getMessage(), e.getLocalizedMessage());
+        }
+        jsonResult.put("result", success);
+        jsonResult.put("message",operationMsg);
+        return jsonResult.toJSONString();
+    }
+
     @PostMapping(
             value = { "/{APP_action:nouveau}", "/{id}/{APP_action:modifier}", "/{id}/{APP_action:differe}" })
     public @ResponseBody String doActionsCreateAndUpdate(@Validated @ModelAttribute(MODEL_ATTRIBUTE_FORM) T form, BindingResult result, Model model,
@@ -113,9 +131,8 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         return doActions(form, result, model, request, params, redirectAttrib);
     }
 
-    @RequestMapping(
-            value = { "/{APP_action:search}", "/{id}/{APP_action:search}", "/{id}/{APP_action:search}" },
-            method = RequestMethod.POST)
+    @PostMapping(
+            value = { "/{APP_action:search}", "/{id}/{APP_action:search}", "/{id}/{APP_action:search}" })
     public String doActionsFind(@Validated @ModelAttribute(MODEL_ATTRIBUTE_FORM) T form, BindingResult result, Model model, HttpServletRequest request,
                                 @RequestParam Map<String, String> params, RedirectAttributes redirectAttrib) throws Exception {
         return doActions(form, result, model, request, params, redirectAttrib);
@@ -421,49 +438,52 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         if (view == null)
             view = CRUD_READ_ALL; // + "." + FILE_HTML;
         // pour forcer la redirection set la valeur de modelTemplate a NULL
-        if (modelTemplate != null) {
-            if ("SUCCES".equals(callPopup))
-                switch (APP_ecran) {
-                    case SCREEN_FORM:
-                        switch (APP_action) {
-                            case CRUD_CREATE:
-                                operationMsg = JavaUtils.doNVL(operationMsg, "CREATE_SUCCES");
-                                modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
-                                break;
-                            case CRUD_UPDATE:
-                                operationMsg = JavaUtils.doNVL(operationMsg, "UPDATE_SUCCES");
-                                modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
-                                break;
-                            case CRUD_DIFFERE:
-                                operationMsg = JavaUtils.doNVL(operationMsg, "DIFFERE_SUCCES");
-                                modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
-                                break;
-                        }
-                        break;
-                    case SCREEN_LIST:
-                        switch (APP_action) {
-                            case CRUD_DELETE:
-                                operationMsg = JavaUtils.doNVL(operationMsg, "DELETE_SUCCES");
-                                modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
-                                break;
-                            case CRUD_READ_ALL:
-                                operationMsg = JavaUtils.doNVL(operationMsg, "SUCCES");
-                                modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
-                                break;
-                        }
-                        break;
-                    default:
-                        operationMsg = JavaUtils.doNVL(operationMsg, "SUCCES");
-                        modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
-                        break;
-                }
-            else
-                modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, callPopup);
-            modelTemplate.addAttribute("PAGE", request.getContextPath() + "/" + getMiddleUrl(true) + "/" + view);
-            modelTemplate.addAttribute(MODEL_ATTRIBUTE_NAVBAR, navbar);
-            this.view = template;
-        } else
+        if(modelTemplate == null) {
             this.view = "redirect:/" + getMiddleUrl(true) + "/" + view;
+            return;
+        }
+        if ("SUCCES".equals(callPopup)) {
+            modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, callPopup);
+        } else {
+            switch (APP_ecran) {
+                case SCREEN_FORM:
+                    switch (APP_action) {
+                        case CRUD_CREATE:
+                            operationMsg = JavaUtils.doNVL(operationMsg, "CREATE_SUCCES");
+                            modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
+                            break;
+                        case CRUD_UPDATE:
+                            operationMsg = JavaUtils.doNVL(operationMsg, "UPDATE_SUCCES");
+                            modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
+                            break;
+                        case CRUD_DIFFERE:
+                            operationMsg = JavaUtils.doNVL(operationMsg, "DIFFERE_SUCCES");
+                            modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
+                            break;
+                    }
+                    break;
+                case SCREEN_LIST:
+                    switch (APP_action) {
+                        case CRUD_DELETE:
+                            operationMsg = JavaUtils.doNVL(operationMsg, "DELETE_SUCCES");
+                            modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
+                            break;
+                        case CRUD_READ_ALL:
+                            operationMsg = JavaUtils.doNVL(operationMsg, "SUCCES");
+                            modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
+                            break;
+                    }
+                    break;
+                default:
+                    operationMsg = JavaUtils.doNVL(operationMsg, "SUCCES");
+                    modelTemplate.addAttribute(MODEL_ATTRIBUTE_POPUP_OPERATION, operationMsg);
+                    break;
+            }
+        }
+        String pageValue = request.getContextPath() + "/" + getMiddleUrl(true) + "/" + view;
+        modelTemplate.addAttribute("PAGE", pageValue);
+        modelTemplate.addAttribute(MODEL_ATTRIBUTE_NAVBAR, navbar);
+        this.view = template;
     }
 
     /**

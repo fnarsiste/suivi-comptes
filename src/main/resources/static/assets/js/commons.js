@@ -18,21 +18,86 @@ function showAnimatedError(errorDiv, message) {
     console.log({errorDiv, message});
 }
 
-function defaultAlertAction(message){
-    console.log(message);
+function appDeleteListeRow(fn, e){
+    e.preventDefault();
+    const data = $(fn).data();
+    swal({
+        icon: "warning",
+        title: "Etes vous sûr ?",
+        text: "Une fois supprimée, vous ne serez plus en mesure de ...",
+        buttons: true, dangerMode: true, closeOnEsc: false,
+        closeOnClickOutside: false
+    })
+    .then((response) => {
+        if(!response) return;
+        showSpinner();
+        const targetUrl = `${data.href}${data.id}/supprimer`;
+        $.ajax({
+            type : "POST",
+            url : targetUrl,
+            data : JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success : function(response) {
+                hideSpinner();
+                var $div = $('<div />').appendTo('body');
+                $div.attr('id', 'js-temp-message')
+                    .html(response.message);
+                if(!response.success) return alertMessageDanger($div);
+                defaultAlertAction($div, function() {
+                    document.location.reload();
+                });
+            },
+            error : function() {
+                hideSpinner();
+            }
+        });
+    });
 }
 
-function showSwallMessage(title, message, type, callback) {
+function showSwallMessage(options, callback) {
+    debugger;
     //"warning", "error", "success" and "info"
-    type = type || 'info';
+    let {icon, title, content, text} = options;
+    icon = icon || 'info';
     title = title || 'Suivi Comptes';
-    swal(title, message || "Aucun message n'est defini", type).then((value) => {
+    const settings = {title, icon, closeOnClickOutside: false};
+    if(content) settings.content = content;
+    if(text) settings.text = text;
+    if(!content && !text) settings.text = "Aucun message n'est defini";
+    swal(settings).then((value) => {
         if(callback) callback();
     });
 }
 
+function showSwallMessageOld(title, message, type, callback) {
+    //"warning", "error", "success" and "info"
+    type = type || 'info';
+    title = title || 'Suivi Comptes';
+    swal({
+        title,
+        content: message || "<b>Aucun message n'est defini</b>",
+        icon: type,
+        closeOnClickOutside: false
+    }).then((value) => {
+        if(callback) callback();
+    });
+}
+
+function getSwallKey(msg) {
+    return typeof msg === 'string' ? 'text' : 'content';;
+}
+
 function defaultAlertAction(message, callback) {
-    showSwallMessage(null, message, null, callback);
+    const keys = getSwallKey(message);
+    showSwallMessage({[keys]: message}, callback);
+    return true;
+}
+
+function alertMessageDanger(message, callback) {
+    const keys = getSwallKey(message);
+    showSwallMessage({[keys]: message, icon: 'error'}, callback);
+    return true;
 }
 
 function getEltSelector(elt, defaultPrefix) {
@@ -167,7 +232,7 @@ function onSubmit(targetUrl, formData, options) {
 
     options = $.extend({}, defaultOptions, options);
 	$.ajax({
-    type : "POST",
+        type : "POST",
         url : targetUrl,
         data : formData,
         // dataType : 'text', contentType: false,
@@ -247,6 +312,22 @@ function showOperationEndedMsg(msgType, endPage, options) {
     }
 }
 
+function appExit(fn, e) {
+    e.preventDefault();
+    const {contextpath} = $(fn).data();
+    swal({
+        title: "Suivi Compte!",
+        text: `Voulez-vous réellement quitter l'application ?`,
+        icon: "warning",
+        buttons: ['Continuez', 'Quittez'],
+        dangerMode: true,
+    }).then((canExit) => {
+        if (canExit) {
+            document.location.href = contextpath;
+        }
+    });
+}
+
 $(document).ready(function(){
    // Initalize data table with buttons
    const table = $('#datatable-buttons').DataTable({
@@ -256,25 +337,14 @@ $(document).ready(function(){
    });
    table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
 
-   $('.js-button-logout').on('click', function(e) {
-      e.preventDefault();
-      const {contextpath} = $(this).data();
-      swal({
-         title: "Suivi Compte!",
-         text: `Voulez-vous réellement quitter l'application ?`,
-         icon: "warning",
-         buttons: ['Continuez', 'Quittez'],
-         dangerMode: true,
-      }).then((canExit) => {
-         if (canExit) {
-            document.location.href = contextpath;
-         }
-      });
-   });
+   $('.js-button-logout').on('click', function(e) {appExit(this, e);});
 
-   $('body').on('submit', '#form, #'+$(document.myform).attr('id'), function (e) {
-   		doSubmitForm(this, e);
-   });
+    // Tout formulaire d'enregistrement et de modification de données
+   $('body').on('submit', '#form, #'+$(document.myform).attr('id'), function (e) {doSubmitForm(this, e);});
 
-   if(typeof runOnceAllLoaded === 'function') runOnceAllLoaded();
+   // Ecoute sur les boutons de suppression sur les listes de données
+   $('.js-app-button-delete').on('click', function (e) {appDeleteListeRow(this, e)});
+
+    // Toutes les pages qui aurient définies cette fonction
+    if(typeof runOnceAllLoaded === 'function') runOnceAllLoaded();
 });

@@ -26,8 +26,9 @@
                                 <td th:text="${banq.adresse}">Cotonou</td>
                                 <td style="white-space: nowrap; width: 15%;">
                                     <div class="btn-group btn-group-sm" style="float: none;">
-                                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{/referentiels/banques/modifier(banqueId=${banq.id})}"><span class="ti-pencil"></span></a>
-                                        <a class="tabledit-delete-button btn btn-sm btn-danger ml-2" style="float: none; margin: 5px;" th:href="@{/referentiels/banques/supprimer(banqueId=${banq.id})}"><span class="ti-trash"></span></a>
+                                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{|/referentiels/banques/${banq.id}/modifier|}"><span class="ti-pencil"></span></a>
+                                        <a href="" class="js-app-button-delete tabledit-delete-button btn btn-sm btn-danger ml-2"
+                                           style="float: none; margin: 5px;" th:data-id="${banq.id}" data-token="1234567890" th:data-href="@{'/referentiels/banques/'}"><span class="ti-trash"></span></a>
                                     </div>
                                 </td>
                             </tr>

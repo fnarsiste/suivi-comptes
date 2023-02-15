@@ -19,27 +19,29 @@ import java.util.List;
 )
 public class GlobalVars<T> implements Serializable {
    protected static final long serialVersionID = 1L;
+   protected String id;
    protected String template;
    protected String view;
    protected String ajax;
-   protected boolean readonly;
-   protected Model modelTemplate;
-   protected List<T> entities;
-   protected T entity;
    protected String APP_module;
    protected String APP_groupe;
    protected String APP_directory;
    protected String APP_ecran;
    protected String APP_action;
    protected String currentScreen;
-   protected String id;
+   protected String operationMsg;
+   protected String headerTitle;
+   protected String pageTitle = "MSG.blank";
+   protected String findPartsDelimiter = "||";
+   protected String navbar;
+
+   protected boolean readonly;
+
+   protected T entity;
+   protected List<T> entities;
    protected HttpMethod httpMethod;
+   protected Model modelTemplate;
    protected HttpServletRequest request;
    protected Class<?> clazz;
    protected MapFlash flashObject;
-   protected String operationMsg;
-   protected String headerTitle;
-   protected String pageTitle;
-   protected String findPartsDelimiter = "||";
-   protected String navbar;
 }

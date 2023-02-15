@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @SuppressWarnings("all")
 public class LoginController {
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
+        model.addAttribute("pageTitle", "MSG.blank");
         return "index";
     }
 
