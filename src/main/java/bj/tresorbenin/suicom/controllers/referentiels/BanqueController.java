@@ -31,8 +31,6 @@ public class BanqueController extends MasterController<Banque> {
     @Override
     protected void showCreateForm(Model model) throws Exception {
         pageTitle = "MSG.title.banques.create";
-        /*entity = new Banque("TEST", "Adresse de livraison");
-        entity.setLibelle("LIBELLE DE TEST");*/
     }
 
     @Override
@@ -49,16 +47,13 @@ public class BanqueController extends MasterController<Banque> {
 
     @Override
     public void insert(Model model, Banque form) throws Exception {
-        banqueService.save(form);
+        banqueService.create(form);
         redirectView();
     }
 
     @Override
     public void update(Model model, Banque form) throws Exception {
-        Banque banque = form.clone();
-        banque.setId(null);
-        delete(model, form.getId());
-        banqueService.save(banque);
+        banqueService.update(form);
         redirectView();
     }
 

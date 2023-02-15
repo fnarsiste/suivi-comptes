@@ -21,7 +21,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="banq : ${List}">
-                                <td th:text="${banq.code}">ABC</td>
+                                <td th:text="|${banq.sigle} (${banq.id})|">ABC</td>
                                 <td th:text="${banq.libelle}">Banque Fiction</td>
                                 <td th:text="${banq.adresse}">Cotonou</td>
                                 <td style="white-space: nowrap; width: 15%;">
