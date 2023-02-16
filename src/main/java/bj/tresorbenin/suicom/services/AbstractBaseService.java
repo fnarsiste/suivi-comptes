@@ -16,6 +16,7 @@ import java.util.Set;
  * @author <a href="mailto:fnarsiste@gmail.com">Nars Sixte</a>
  * @date February 16th, 2023
  */
+@SuppressWarnings("all")
 public abstract class AbstractBaseService<E> {
     protected Class<?> entityClass;
 
@@ -25,7 +26,26 @@ public abstract class AbstractBaseService<E> {
 
     public abstract BaseRepository<E> getRepository();
 
-    public abstract E update(E entity);
+    private long id(E entity) throws Exception {
+        Class<? extends E> klass = (Class<? extends E>) entity.getClass();
+        Method method = klass.getMethod("getId");
+        return (Long) method.invoke(entity);
+    }
+
+    @Transactional
+    public E update(E entity) throws Exception {
+        // Conserver les modifications de l'utilisateur en clonant
+        Class<? extends E> klass = (Class<? extends E>) entity.getClass();
+        Method cloneMethod = klass.getMethod("clone");
+        E clone = (E) cloneMethod.invoke(entity);
+        Class<? extends E> cloneKlass = (Class<? extends E>) clone.getClass();
+        Method setIdMethod = cloneKlass.getMethod("setId", Long.class);
+        setIdMethod.invoke(clone, (Object) null);
+        // Ici, supprimons l'ancien de la base
+        delete(entity);
+        // Créer un nouvel enregistrement a partir de la copie
+        return create(clone);
+    }
 
     public E get(Object id) {
         long iid = Long.parseLong(id.toString());
@@ -62,12 +82,8 @@ public abstract class AbstractBaseService<E> {
     @Transactional
     public void delete(E entity) {
         try {
-            Class<?> klass = entity.getClass();
-            Method method = klass.getDeclaredMethod("getId");
-            Long id = (Long) method.invoke(klass);
-            delete(id);
+            delete(id(entity));
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

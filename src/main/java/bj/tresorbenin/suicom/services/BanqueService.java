@@ -17,8 +17,7 @@ public class BanqueService extends AbstractBaseService<Banque> {
         super(Banque.class);
     }
 
-    @Override
-    public Banque update(Banque entity) {
+    public Banque update__(Banque entity) {
         // Conserver les modifications de l'utilisateur en clonant
         Banque banque = entity.clone();
         banque.setId(null);
