@@ -32,7 +32,7 @@ public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("ID de la ligne (sequentiel).")
-    private Long id;
+    protected Long id;
 
     @Column(name = "code", length = 32, nullable = false)
     @Comment("Code auto généré via trigger ou fourni.")
