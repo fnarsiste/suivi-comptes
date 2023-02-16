@@ -309,7 +309,8 @@ $(document).ready(function(){
    const table = $('#datatable-buttons').DataTable({
       lengthChange: !true,
       buttons: ['copy', 'excel', 'pdf'], //, 'colvis'],
-      language: LANG
+      language: LANG,
+      order: [[TABLE_SORTING, 'asc']]
    });
    table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
 

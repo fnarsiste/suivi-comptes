@@ -127,11 +127,11 @@
         });
 
         /* Calender */
-        window.addEventListener('load', function () {
+        /*$window.addEventListener('load', function () {
 			vanillaCalendar.init({
             disablePastDays: true
             });
-        })
+        })*/
         
         /* BEGIN SVG WEATHER ICON */
         if (typeof Skycons !== 'undefined'){
