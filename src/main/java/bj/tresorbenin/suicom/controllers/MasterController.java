@@ -111,7 +111,7 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         JSONObject jsonResult = new JSONObject();
         boolean success = false;
         try {
-            delete(model, null);
+            delete(model, id);
             success = true;
             operationMsg = "Opération de suppression effecuée avec succès.";
         } catch (Exception e) {
@@ -227,7 +227,9 @@ public abstract class MasterController<T> extends GlobalVars<T> {
                 if (asyncSubmission) {
                     jsonResult.put("result", "error");
                     jsonResult.put("type", e.getClass().getSimpleName());
-                    jsonResult.put("message", JavaUtils.getMsgPropertiesValue(result.getAllErrors().get(0).getCode()));
+                    //TODO : FINALISER LA METHODE doCatchExceptionHandler POUR NOURRIR result
+                    String message = result.getAllErrors().isEmpty() ? "" : result.getAllErrors().get(0).getCode();
+                    jsonResult.put("message", JavaUtils.getMsgPropertiesValue(message));
                     model.addAttribute(CATCH_ERROR, false);
                 }
             }

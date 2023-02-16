@@ -40,11 +40,8 @@ function appDeleteListeRow(fn, e){
             contentType: 'application/json',
             success : function(response) {
                 hideSpinner();
-                var $div = $('<div />').appendTo('body');
-                $div.attr('id', 'js-temp-message')
-                    .html(response.message);
-                if(!response.success) return alertMessageDanger($div);
-                defaultAlertAction($div, function() {
+                if(!response.result) return alertMessageDanger(response.message);
+                defaultAlertAction(response.message, function() {
                     document.location.reload();
                 });
             },
@@ -55,48 +52,27 @@ function appDeleteListeRow(fn, e){
     });
 }
 
-function showSwallMessage(options, callback) {
-    debugger;
+function showSwallMessage(title, message, type, callback) {
     //"warning", "error", "success" and "info"
-    let {icon, title, content, text} = options;
-    icon = icon || 'info';
+    console.log({title, message, type, callback});
+    const $div = $('#js-temp-message');
+    icon = type || 'info';
     title = title || 'Suivi Comptes';
-    const settings = {title, icon, closeOnClickOutside: false};
-    if(content) settings.content = content;
-    if(text) settings.text = text;
-    if(!content && !text) settings.text = "Aucun message n'est defini";
+    message = message || "<b>Aucun message n'est defini</b>";
+    $div.html(message);
+    const settings = {title, icon, text: message, content: $div, closeOnClickOutside: false};
     swal(settings).then((value) => {
         if(callback) callback();
     });
 }
 
-function showSwallMessageOld(title, message, type, callback) {
-    //"warning", "error", "success" and "info"
-    type = type || 'info';
-    title = title || 'Suivi Comptes';
-    swal({
-        title,
-        content: message || "<b>Aucun message n'est defini</b>",
-        icon: type,
-        closeOnClickOutside: false
-    }).then((value) => {
-        if(callback) callback();
-    });
-}
-
-function getSwallKey(msg) {
-    return typeof msg === 'string' ? 'text' : 'content';;
-}
-
 function defaultAlertAction(message, callback) {
-    const keys = getSwallKey(message);
-    showSwallMessage({[keys]: message}, callback);
+    showSwallMessage(null,message, null, callback);
     return true;
 }
 
 function alertMessageDanger(message, callback) {
-    const keys = getSwallKey(message);
-    showSwallMessage({[keys]: message, icon: 'error'}, callback);
+    showSwallMessage(null, message, 'error', callback);
     return true;
 }
 
@@ -344,7 +320,9 @@ $(document).ready(function(){
 
    // Ecoute sur les boutons de suppression sur les listes de données
    $('.js-app-button-delete').on('click', function (e) {appDeleteListeRow(this, e)});
+    // Convertir en maj les champs tagués de 'js-to-upper'
+   $('.js-to-upper').on('change', function (){$(this).val($(this).val().toUpperCase());});
 
-    // Toutes les pages qui aurient définies cette fonction
+   // Toutes les pages qui aurient définies cette fonction
     if(typeof runOnceAllLoaded === 'function') runOnceAllLoaded();
 });
