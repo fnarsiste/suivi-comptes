@@ -5,6 +5,7 @@ import bj.tresorbenin.suicom.entities.Banque;
 import bj.tresorbenin.suicom.services.BanqueService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,8 @@ import java.util.Map;
 @SuppressWarnings("all")
 @RequestMapping("/{APP_module:referentiels}/{APP_directory:banques}")
 public class BanqueController extends MasterController<Banque> {
-    private final BanqueService banqueService;
-
-    public BanqueController(BanqueService banqueService) {
-        super();
-        this.banqueService = banqueService;
-    }
+    @Autowired
+    private BanqueService banqueService;
 
     @Override
     protected void initForm(Model model, String id) throws Exception {
@@ -41,7 +38,7 @@ public class BanqueController extends MasterController<Banque> {
     @Override
     public void showList(Model model) throws Exception {
         pageTitle = "MSG.title.banques.list";
-        entities = banqueService.findAll();
+        entities = banqueService.getAll();
         super.showList(model);
     }
 
@@ -59,17 +56,19 @@ public class BanqueController extends MasterController<Banque> {
 
     @Override
     public void delete(Model model, Object id) throws Exception {
-        banqueService.deleteById(Long.valueOf(id.toString()));
+        banqueService.delete(Long.valueOf(id.toString()));
     }
 
     @Override
     public Banque getById(Object id) {
-        return banqueService.findById(Long.parseLong(id.toString()));
+        return banqueService.get(id);
     }
 
     @Override
-    protected void find(Model model, HttpServletRequest request, Map<String, String> params) {}
+    protected void find(Model model, HttpServletRequest request, Map<String, String> params) {
+    }
 
     @Override
-    public void doGetCredentialsSession() {}
+    public void doGetCredentialsSession() {
+    }
 }
