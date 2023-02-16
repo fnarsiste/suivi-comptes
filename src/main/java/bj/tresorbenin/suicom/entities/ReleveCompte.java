@@ -1,5 +1,6 @@
 package bj.tresorbenin.suicom.entities;
 
+import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
-package bj.tresorbenin.suicom.entities;
+package bj.tresorbenin.suicom.entities.auth;
 
+import bj.tresorbenin.suicom.entities.base.NamedEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -12,7 +13,7 @@ import lombok.*;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Table(name="profil_utilisateurs")
-public class ProfilUtilisateur extends NamedEntity{
+public class ProfilUtilisateur extends NamedEntity {
     Utilisateur utilisateur;
     Profil profil;
 }

@@ -1,5 +1,6 @@
-package bj.tresorbenin.suicom.entities;
+package bj.tresorbenin.suicom.entities.referentiels;
 
+import bj.tresorbenin.suicom.entities.base.NamedEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;

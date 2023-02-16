@@ -1,4 +1,4 @@
-package bj.tresorbenin.suicom.entities;
+package bj.tresorbenin.suicom.entities.base;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

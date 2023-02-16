@@ -1,8 +1,8 @@
 package bj.tresorbenin.suicom.controllers.referentiels;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
-import bj.tresorbenin.suicom.entities.Banque;
-import bj.tresorbenin.suicom.services.BanqueService;
+import bj.tresorbenin.suicom.entities.referentiels.Banque;
+import bj.tresorbenin.suicom.services.referentiels.BanqueService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
