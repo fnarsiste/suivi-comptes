@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Agent;
-import bj.tresorbenin.suicom.repositories.AgentRepository;
+import bj.tresorbenin.suicom.repositories.jpa.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

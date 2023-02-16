@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Piece;
-import bj.tresorbenin.suicom.repositories.PieceRepository;
+import bj.tresorbenin.suicom.repositories.jpa.PieceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

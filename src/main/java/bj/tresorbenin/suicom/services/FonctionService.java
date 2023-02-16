@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Fonction;
-import bj.tresorbenin.suicom.repositories.FonctionRepository;
+import bj.tresorbenin.suicom.repositories.jpa.FonctionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

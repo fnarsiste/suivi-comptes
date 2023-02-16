@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Statut;
-import bj.tresorbenin.suicom.repositories.StatutRepository;
+import bj.tresorbenin.suicom.repositories.jpa.StatutRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

@@ -2,7 +2,7 @@ package bj.tresorbenin.suicom.services;
 
 
 import bj.tresorbenin.suicom.entities.LettreAutorisation;
-import bj.tresorbenin.suicom.repositories.LettreAutorisationRepository;
+import bj.tresorbenin.suicom.repositories.jpa.LettreAutorisationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

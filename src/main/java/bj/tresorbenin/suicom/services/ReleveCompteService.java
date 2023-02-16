@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.ReleveCompte;
-import bj.tresorbenin.suicom.repositories.ReleveCompteRepository;
+import bj.tresorbenin.suicom.repositories.jpa.ReleveCompteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

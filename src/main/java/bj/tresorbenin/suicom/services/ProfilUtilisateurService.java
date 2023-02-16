@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.ProfilUtilisateur;
-import bj.tresorbenin.suicom.repositories.ProfilUtilisateurRepository;
+import bj.tresorbenin.suicom.repositories.jpa.ProfilUtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;

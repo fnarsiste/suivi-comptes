@@ -1,7 +1,7 @@
 package bj.tresorbenin.suicom.services;
 
 import bj.tresorbenin.suicom.entities.Demande;
-import bj.tresorbenin.suicom.repositories.DemandeRepository;
+import bj.tresorbenin.suicom.repositories.jpa.DemandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
