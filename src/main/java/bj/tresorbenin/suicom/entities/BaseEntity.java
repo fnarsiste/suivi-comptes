@@ -17,6 +17,7 @@ package bj.tresorbenin.suicom.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Comment;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,14 +31,21 @@ import java.util.Date;
 public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Comment("ID de la ligne (sequentiel).")
     private Long id;
-    @Column(name = "code", length = 32)
+
+    @Column(name = "code", length = 32, nullable = false)
+    @Comment("Code auto généré via trigger ou fourni.")
     protected String code;
-    @Column(name = "date_creation")
+
+    @Comment("Date de creation.")
     protected Date dateCreation;
+
     @Column(name = "date_cessation")
+    @Comment("Date de cessation.")
     protected Date dateCessation;
-    @Column(name = "modifier_par")
+
+    @Comment("Compte user ayant modifié.")
     protected String modifierPar;
 
     public boolean isNew() {
