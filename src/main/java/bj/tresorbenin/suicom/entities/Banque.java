@@ -1,7 +1,11 @@
 package bj.tresorbenin.suicom.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.*;
+import org.hibernate.annotations.Comment;
 
 @Getter
 @Setter
@@ -15,16 +19,14 @@ import lombok.*;
                 @Index(name = "IDX_LIBELLE", columnList = "libelle")
         },
         uniqueConstraints = {
-                @UniqueConstraint(name = "BANQUE_UK", columnNames = {"code", "sigle", "date_cessation"})
+                @UniqueConstraint(name = "BANQUE_UK", columnNames = {"code", "date_cessation"})
         }
 )
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Banque extends NamedEntity implements Cloneable {
 
-    @Column(nullable = false, length = 32)
-    private String sigle;
-
+    @Comment("Adresse de la banque")
     private String adresse;
 
     @Override
