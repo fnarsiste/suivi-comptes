@@ -1,25 +1,49 @@
 package bj.tresorbenin.suicom.entities.referentiels;
 
-import bj.tresorbenin.suicom.entities.base.NamedEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import bj.tresorbenin.suicom.entities.base.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="agents")
-public class Agent extends NamedEntity implements Cloneable {
+@Table(name = "agents",
+        indexes = {
+                @Index(name = "agt_code_ix", columnList = "code"),
+                @Index(name = "agt_matricule_ix", columnList = "matricule"),
+                @Index(name = "fct_nom_ix", columnList = "noms"),
+                @Index(name = "fct_prenom_ix", columnList = "prenoms"),
+                @Index(name = "fct_email_ix", columnList = "email"),
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(name = "agents_uk", columnNames = {"code", "date_cessation"})
+        }
+)
+public class Agent extends BaseEntity implements Cloneable {
+    @Comment("Numero matricule agent")
+    @Column(length = 20, nullable = false)
     String matricule;
-    String nom;
-    String prenoms;
+
+    @Comment("Noms agent")
+    @Column(name = "noms", length = 64, nullable = false)
+    String lastName;
+
+    @Comment("Prénoms agent")
+    @Column(name = "prenoms", length = 64, nullable = false)
+    String firstName;
+
+    @Column(name = "email", length = 64, nullable = false)
+    @Comment("Adresse email agent")
+    String emailAddress;
+
+    @Comment("Adresse agent")
     String adresse;
-    String mail;
 
     @Override
     public Agent clone() {

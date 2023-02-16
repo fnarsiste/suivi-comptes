@@ -1,6 +1,6 @@
 package bj.tresorbenin.suicom.entities.auth;
 
-import bj.tresorbenin.suicom.entities.referentiels.Agent;
+import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -11,9 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=false)
-@Table(name="utilisateurs")
-public class Utilisateur extends Agent {
+@EqualsAndHashCode(callSuper = false)
+@Table(name = "utilisateurs")
+public class Utilisateur extends BaseEntity {
     String login;
     String motpasse;
 }

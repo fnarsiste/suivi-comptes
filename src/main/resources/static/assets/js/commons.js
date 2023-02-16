@@ -52,6 +52,10 @@ function appDeleteListeRow(fn, e){
     });
 }
 
+function msgBox(message) {
+    defaultAlertAction(message);
+}
+
 function showSwallMessage(title, message, type, callback) {
     //"warning", "error", "success" and "info"
     console.log({title, message, type, callback});
