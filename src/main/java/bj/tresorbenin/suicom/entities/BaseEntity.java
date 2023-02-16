@@ -38,11 +38,15 @@ public class BaseEntity implements Serializable {
     @Comment("Code auto généré via trigger ou fourni.")
     protected String code;
 
+    @Basic
     @Comment("Date de creation.")
+    @Temporal(TemporalType.TIMESTAMP)
     protected Date dateCreation;
 
+    @Basic
     @Column(name = "date_cessation")
     @Comment("Date de cessation.")
+    @Temporal(TemporalType.TIMESTAMP)
     protected Date dateCessation;
 
     @Comment("Compte user ayant modifié.")
