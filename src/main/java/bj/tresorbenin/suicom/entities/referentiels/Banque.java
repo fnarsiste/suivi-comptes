@@ -16,8 +16,8 @@ import org.hibernate.annotations.Comment;
 @Table(
         name = "banques",
         indexes = {
-                @Index(name = "IDX_CODE", columnList = "code"),
-                @Index(name = "IDX_LIBELLE", columnList = "libelle")
+                @Index(name = "bq_code_ix", columnList = "code"),
+                @Index(name = "bq_libelle_ix", columnList = "libelle")
         },
         uniqueConstraints = {
                 @UniqueConstraint(name = "BANQUE_UK", columnNames = {"code", "date_cessation"})
