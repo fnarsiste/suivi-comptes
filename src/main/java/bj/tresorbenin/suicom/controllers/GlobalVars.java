@@ -34,6 +34,7 @@ public class GlobalVars<T> implements Serializable {
    protected String pageTitle = "MSG.blank";
    protected String findPartsDelimiter = "||";
    protected String navbar;
+   protected String pageRoute;
 
    protected boolean readonly;
 

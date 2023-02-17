@@ -101,6 +101,8 @@ public abstract class MasterController<T> extends GlobalVars<T> {
                 doShowList(model);
             doCatchExceptionHandler(result, model, e, SETUP_ERROR);
         }
+        pageRoute = "/" + getRoute();
+        model.addAttribute("pageRoute", pageRoute);
         return this.view;
     }
 
@@ -344,17 +346,20 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         model.addAttribute("lbl_description", "MSG.description");
     }
 
+    private String getRoute() {
+        return  String.format(
+                "%s%s/%s/",
+                APP_module,
+                APP_groupe==null ? "" : String.format("/%s", APP_groupe),
+                APP_directory);
+    }
+
     private void doGetTemplate() {
         if (APP_module.contains("profilchoice"))
             template = TEMPLATE_PROFILCHOICE;
         else {
             template = MAIN_TEMPLATE;
-            String calcTemplate = String.format(
-                    "%s%s/%s/%s",
-                    APP_module,
-                    APP_groupe==null ? "" : String.format("/%s", APP_groupe),
-                    APP_directory,
-                    APP_ecran);
+            String calcTemplate = String.format("%s%s", getRoute(), APP_ecran);
             template = calcTemplate;
         }
     }
