@@ -7,6 +7,8 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AgentService extends AbstractBaseService<Agent> {
 
@@ -16,5 +18,9 @@ public class AgentService extends AbstractBaseService<Agent> {
 
     public AgentService() {
         super(Agent.class);
+    }
+
+    public List<Agent> getAccountableAgent() {
+        return toList(repository.getAccountableAgent());
     }
 }

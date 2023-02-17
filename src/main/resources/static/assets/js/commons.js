@@ -328,6 +328,8 @@ $(document).ready(function(){
     // Convertir en maj les champs tagués de 'js-to-upper'
    $('.js-to-upper').on('change', function (){$(this).val($(this).val().toUpperCase());});
 
+   $('.select2').select2({width: '100%'})
+
    // Toutes les pages qui aurient définies cette fonction
     if(typeof runOnceAllLoaded === 'function') runOnceAllLoaded();
 });

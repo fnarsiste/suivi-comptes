@@ -326,6 +326,8 @@ public abstract class MasterController<T> extends GlobalVars<T> {
     protected void showCreateForm(Model model) throws Exception {
     }
 
+    public void beforePersist(T entity) throws Exception {};
+
     protected String getMiddleUrl(boolean withSibDirectory) {
         String base = APP_module;
         String baseWithSibDirectory = APP_module + "/" + APP_directory;

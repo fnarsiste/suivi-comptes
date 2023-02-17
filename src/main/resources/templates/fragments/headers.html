@@ -18,7 +18,10 @@
       <!-- DataTables -->
       <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" />
       <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/datatables/buttons.bootstrap4.min.css}" rel="stylesheet" type="text/css" />
-      <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/datatables/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css" />
+       <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/select2/select2.min.css}" rel="stylesheet" type="text/css" />
+
+       <!-- Select2 -->
+       <link th:if="${scope != 'login'}" th:href="@{/assets/plugins/datatables/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css" />
 
       <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
       <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
@@ -92,13 +95,16 @@
         <script th:src="@{/assets/plugins/datatables/buttons.html5.min.js}"></script>
         <script th:src="@{/assets/plugins/datatables/buttons.print.min.js}"></script>
         <script th:src="@{/assets/plugins/datatables/buttons.colVis.min.js}"></script>
-        <!-- Responsive examples -->
-        <script th:src="@{/assets/plugins/datatables/dataTables.responsive.min.js}"></script>
-        <script th:src="@{/assets/plugins/datatables/responsive.bootstrap4.min.js}"></script>
+          <!-- Responsive examples -->
+          <script th:src="@{/assets/plugins/datatables/dataTables.responsive.min.js}"></script>
+          <script th:src="@{/assets/plugins/datatables/responsive.bootstrap4.min.js}"></script>
 
-         <script th:src="@{/assets/js/app.js}"></script>
-          <script th:src="@{/assets/js/polyfill.js}"></script>
-          <script th:src="@{/assets/js/commons.js}"></script>
+          <!-- Select2 -->
+        <script th:src="@{/assets/plugins/select2/select2.min.js}"></script>
+
+        <script th:src="@{/assets/js/app.js}"></script>
+        <script th:src="@{/assets/js/polyfill.js}"></script>
+        <script th:src="@{/assets/js/commons.js}"></script>
       </section>
    </body>
 </html>

@@ -6,13 +6,9 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @SuppressWarnings("all")
 public class JavaUtils {
@@ -121,5 +117,14 @@ public class JavaUtils {
 
     public static Date stringIntoDateWithFormat(String dateInString) {
         return stringIntoDateWithFormat(dateInString, "dd/MM/yyyy");
+    }
+
+    public static String generateOtpCode(int length) {
+        String code = "";
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            code += ""+random.nextInt(0, 10);
+        }
+        return code;
     }
 }

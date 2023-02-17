@@ -60,7 +60,27 @@ begin
 	RETURN NEW;
 END;
 $$;	
-	
+
+-- fonction trigger de mise a jour de l'ID Agent dans User si un agent se voit édité
+CREATE OR REPLACE FUNCTION fn_update_agent_in_user()
+RETURNS trigger
+language plpgsql 
+AS $$
+declare 
+	updatedId integer := (select a.id 
+		from agents a where a.matricule = new.matricule and a.date_cessation <> 'infinity' 
+		order by id desc limit 1);
+begin 
+	update users u set u.agent_id = new.id where u.agent_id = updatedId;
+	return new;
+end;
+$$;	
+CREATE OR REPLACE TRIGGER trg_update_user_agentid 
+AFTER INSERT ON agents 
+FOR EACH ROW EXECUTE PROCEDURE fn_update_agent_in_user();
+
+select a.id from agents a where a.matricule = '86438' and a.date_cessation <> 'infinity' order by id desc limit 1;
+
 -- trigger d'insertion dans banque
 CREATE OR REPLACE TRIGGER TRG_INSERT_BANQUE 
 BEFORE INSERT ON banques 
@@ -81,3 +101,7 @@ FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('statuts', 'ST', 0);
 CREATE OR REPLACE TRIGGER TRG_INSERT_PROFILS
 BEFORE INSERT ON profils
 FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('profils', 'PF', 0);
+
+CREATE OR REPLACE TRIGGER TRG_INSERT_USERS
+BEFORE INSERT ON users
+FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('users', 'USR', 16);

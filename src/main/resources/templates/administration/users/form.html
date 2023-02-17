@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{mainlayout.html}">
+<head><title>Nouveau Statut</title></head>
+<body class="fixed-left">
+<section layout:fragment="core-content">
+    <div th:if="${show_form}">
+        <div class="row" th:replace="~{fragments/includes.html :: formRequiredArea}"></div>
+    </div>
+    <form id="form" name="myform" class="" method="POST" th:action="@{${cible}}" th:object="${Form}">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{code}"/>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card text-center" th:if="${not show_form}">
+                    <div class="card-body">
+                        <h3>Il n'y a pas d'agents disponibles pour créer des comptes utilisateurs.</h3>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="@{|${pageRoute}liste|}" href="/" class="col-sm-3 btn btn-primary btn-large">
+                            Retour à la liste
+                        </a>
+                        <a th:href="@{/referentiels/agents/nouveau}" href="/" class="col-sm-3 btn btn-success btn-large">
+                            Créer de nouveaux agents...
+                        </a>
+                    </div>
+                </div>
+                <div class="card" th:if="${show_form}">
+                    <div class="card-body">
+                        <div class="form-group mb-0 row">
+                            <div class="col-lg-3 text-right"><label class="my-2 py-1">Login ID * : </label></div>
+                            <div class="col-lg-3">
+                                <input th:readonly="${readonly}" type="text" th:field="*{login}"
+                                        class="form-control" required
+                                        placeholder="Login ID"/>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 row">
+                            <div class="col-lg-3 text-right"><label class="my-2 py-1">Profil agent lié * :</label></div>
+                            <div class="col-lg-9">
+                                <select class="select2 form-control custom-select" th:field="*{agent.id}">
+                                    <option value="-1">Sélectionnez un agent...</option>
+                                    <option th:each="agt : ${agents}" th:value="${agt.id}" th:text="${agt.fullnameCombo}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 row">
+                            <div class="col-lg-3 text-right"><label class="my-2 py-1">Mot de passe * :</label></div>
+                            <div class="col-lg-9">
+                                <input  type="password" th:field="*{password}"
+                                        class="form-control" required
+                                        placeholder="Mot de passe"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:replace="~{fragments/includes.html :: formButtonsArea(offset = 3)}" class="card-footer"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function runOnceAllLoaded() {
+            $('#login').focus();
+        }
+    </script>
+</section>
+</body>
+</html>

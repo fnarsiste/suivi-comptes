@@ -32,6 +32,32 @@ public abstract class AbstractBaseService<E> {
         return (Long) method.invoke(entity);
     }
 
+    public E get(Object id) {
+        long iid = Long.parseLong(id.toString());
+        return getRepository().get(iid).orElse(null);
+    }
+
+    public E getById(Long id) {
+        return get(id);
+    }
+
+    public E getByCode(String code) {
+        return getRepository().findByCode(code).orElse(null);
+    }
+
+    public List<E> getAll() {
+        return toList(getRepository().getAll());
+    }
+
+    protected List<E> toList(Set<E> set) {
+        return new ArrayList<>(new HashSet<>(set));
+    }
+
+    @Transactional
+    public E create(E entity) {
+        return getRepository().save(entity);
+    }
+
     @Transactional
     public E update(E entity) throws Exception {
         // Conserver les modifications de l'utilisateur en clonant
@@ -45,28 +71,6 @@ public abstract class AbstractBaseService<E> {
         delete(entity);
         // Créer un nouvel enregistrement a partir de la copie
         return create(clone);
-    }
-
-    public E get(Object id) {
-        long iid = Long.parseLong(id.toString());
-        return getRepository().findById(iid).orElse(null);
-    }
-
-    public E getById(Long id) {
-        return get(id);
-    }
-
-    public E getByCode(String code) {
-        return getRepository().findByCode(code).orElse(null);
-    }
-
-    public List<E> getAll() {
-        return new ArrayList<>(new HashSet<>(getRepository().getAll()));
-    }
-
-    @Transactional
-    public E create(E entity) {
-        return getRepository().save(entity);
     }
 
     @Transactional

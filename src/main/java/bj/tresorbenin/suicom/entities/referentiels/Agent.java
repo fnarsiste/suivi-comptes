@@ -1,5 +1,6 @@
 package bj.tresorbenin.suicom.entities.referentiels;
 
+import bj.tresorbenin.suicom.entities.administration.Utilisateur;
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,4 +45,11 @@ public class Agent extends BaseEntity {
 
     @Comment("Adresse agent")
     String adresse;
+
+    @OneToOne(optional = false, mappedBy = "agent", cascade = CascadeType.ALL)
+    private Utilisateur user;
+
+    public String getFullnameCombo() {
+        return String.format("%s - %s %s", getMatricule(), getFirstName(), getLastName());
+    }
 }
