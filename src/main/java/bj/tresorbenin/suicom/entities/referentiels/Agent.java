@@ -25,7 +25,7 @@ import org.hibernate.annotations.Comment;
                 @UniqueConstraint(name = "agents_uk", columnNames = {"code", "date_cessation"})
         }
 )
-public class Agent extends BaseEntity implements Cloneable {
+public class Agent extends BaseEntity {
     @Comment("Numero matricule agent")
     @Column(length = 20, nullable = false)
     String matricule;
@@ -44,13 +44,4 @@ public class Agent extends BaseEntity implements Cloneable {
 
     @Comment("Adresse agent")
     String adresse;
-
-    @Override
-    public Agent clone() {
-        try {
-            return (Agent) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

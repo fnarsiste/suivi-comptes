@@ -28,7 +28,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BaseEntity implements Serializable {
+public class BaseEntity implements Serializable, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("ID de la ligne (sequentiel).")
@@ -56,4 +56,12 @@ public class BaseEntity implements Serializable {
         return this.id == null;
     }
 
+    @Override
+    public BaseEntity clone() {
+        try {
+            return (BaseEntity) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

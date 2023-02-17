@@ -21,18 +21,9 @@ import lombok.Setter;
         uniqueConstraints = {
                 @UniqueConstraint(name = "statuts_uk", columnNames = {"code", "date_cessation"})
         })
-public class Statut extends NamedEntity implements Cloneable {
+public class Statut extends NamedEntity {
     public Statut(String code, String libelle) {
         super(code);
         setLibelle(libelle);
-    }
-
-    @Override
-    public Statut clone() {
-        try {
-            return (Statut) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
     }
 }

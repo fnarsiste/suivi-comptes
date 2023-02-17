@@ -25,17 +25,17 @@ import org.hibernate.annotations.Comment;
 )
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Banque extends NamedEntity implements Cloneable {
+public class Banque extends NamedEntity {
 
     @Comment("Adresse de la banque")
     private String adresse;
 
-    @Override
+    /*@Override
     public Banque clone() {
         try {
             return (Banque) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
-    }
+    }*/
 }

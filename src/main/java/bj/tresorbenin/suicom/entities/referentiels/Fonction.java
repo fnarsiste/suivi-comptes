@@ -23,19 +23,10 @@ import lombok.Setter;
                 @UniqueConstraint(name = "fonctions_uk", columnNames = {"code", "date_cessation"})
         }
 )
-public class Fonction extends NamedEntity implements Cloneable {
+public class Fonction extends NamedEntity {
 
     public Fonction(String code, String libelle) {
         super(libelle);
         setCode(code);
-    }
-
-    @Override
-    public Fonction clone() {
-        try {
-            return (Fonction) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
     }
 }
