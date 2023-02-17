@@ -15,8 +15,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "profils",
         indexes = {
-                @Index(name = "IDX_CODE", columnList = "code"),
-                @Index(name = "IDX_LIBELLE", columnList = "libelle")
+                @Index(name = "pf_code_ix", columnList = "code"),
+                @Index(name = "pf_libelle_ix", columnList = "libelle")
         },
         uniqueConstraints = {
                 @UniqueConstraint(name = "PROFIL_UK", columnNames = {"code", "date_cessation"})
