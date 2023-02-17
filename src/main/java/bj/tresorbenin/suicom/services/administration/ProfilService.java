@@ -1,4 +1,4 @@
-package bj.tresorbenin.suicom.services.security;
+package bj.tresorbenin.suicom.services.administration;
 
 import bj.tresorbenin.suicom.entities.administration.Profil;
 import bj.tresorbenin.suicom.repositories.jpa.auth.ProfilRepository;

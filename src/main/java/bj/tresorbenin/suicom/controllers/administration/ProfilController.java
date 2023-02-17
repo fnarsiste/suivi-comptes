@@ -2,7 +2,7 @@ package bj.tresorbenin.suicom.controllers.administration;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
 import bj.tresorbenin.suicom.entities.administration.Profil;
-import bj.tresorbenin.suicom.services.security.ProfilService;
+import bj.tresorbenin.suicom.services.administration.ProfilService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
