@@ -2,7 +2,10 @@ package bj.tresorbenin.suicom.entities.base;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 @Getter
@@ -10,8 +13,6 @@ import org.hibernate.annotations.Comment;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class NamedEntity extends BaseEntity {
 
     @Column(name = "libelle", nullable = false)

@@ -42,16 +42,27 @@
                     </ul>
                 </li>
 
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-settings"></i>
+                        <span> Administration </span>
+                        <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a th:href="@{/administration/profils/liste}">Profils</a></li>
+                        <li><a th:href="@{/administration/users/liste}">Utilisateurs</a></li>
+                        <li><a th:href="@{/administration/user-profils/liste}">Profil utlisateur</a></li>
+                    </ul>
+                </li>
+
                 <li class="menu-title">Outils</li>
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i
                             class="mdi mdi-account"></i><span> Mon compte </span></a>
                     <ul class="list-unstyled">
-                        <li><a th:href="@{/administration/profil}"> Profil utilisateur</a></li>
-                        <li><a th:href="@{/administration/reset-password}"> Changer mot de passe</a></li>
+                        <li><a th:href="@{/account/profil}"> Profil utilisateur</a></li>
+                        <li><a th:href="@{/account/reset-password}"> Changer mot de passe</a></li>
                         <li><a th:data-contextpath="${@environment.getProperty('server.servlet.context-path')}"
                                class="js-button-logout"
-                               th:href="@{/administration/logout}"> Déconnexion</a>
+                               th:href="@{/account/logout}"> Déconnexion</a>
                         </li>
                     </ul>
                 </li>

@@ -61,11 +61,14 @@
                           <span><b><em>Administrateur</em></b></span><br>
                           <span><em>fnarsiste@gmail.com</em></span>
                       </div>
-                      <a class="dropdown-item" th:href="@{/administration/profil}"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Mon profil</a>
-                      <a class="dropdown-item" th:href="@{/administration/configs}"><i class="mdi mdi-settings m-r-5 text-muted"></i> Paramètres</a>
-                      <a class="dropdown-item" th:href="@{/administration/lock-screen}"><i class="mdi mdi-lock-open-outline m-r-5 text-muted"></i> Verrouiller</a>
+                      <a class="dropdown-item" th:href="@{/account/profil}"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Mon profil</a>
+                      <a class="dropdown-item" th:href="@{/account/configs}"><i class="mdi mdi-settings m-r-5 text-muted"></i> Paramètres</a>
+                      <a class="dropdown-item" th:href="@{/account/lock-screen}"><i class="mdi mdi-lock-open-outline m-r-5 text-muted"></i> Verrouiller</a>
                       <div class="dropdown-divider"></div>
-                      <a th:data-contextpath="${@environment.getProperty('server.servlet.context-path')}" class="js-button-logout dropdown-item" th:href="@{/administration/logout}"><i class="mdi mdi-logout m-r-5 text-muted"></i> Déconnexion</a>
+                      <a th:data-contextpath="${@environment.getProperty('server.servlet.context-path')}"
+                         class="js-button-logout dropdown-item" th:href="@{/account/logout}">
+                          <i class="mdi mdi-logout m-r-5 text-muted"></i> Déconnexion
+                      </a>
                   </div>
               </li>
           </ul>

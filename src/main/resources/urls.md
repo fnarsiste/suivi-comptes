@@ -3,4 +3,6 @@
 [Spring Boot Thymeleaf Layout Dialect](https://youtu.be/9X460st9CW4)   
 [Doc tyhmeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf#introducing-thymeleaf)   
 [Generation des fields des entité dans un certain ordre](https://stackoverflow.com/questions/1298322/wrong-ordering-in-generated-table-in-jpa)   
-[PostgreSQL CREATE TRIGGER](https://www.postgresqltutorial.com/postgresql-triggers/creating-first-trigger-postgresql/)
+[PostgreSQL CREATE TRIGGER](https://www.postgresqltutorial.com/postgresql-triggers/creating-first-trigger-postgresql/)   
+[Material Design icons (mdi-*)](https://pictogrammers.com/library/mdi/)   
+[How to set TG_ARGV values](https://bytes.com/topic/postgresql/answers/667132-how-set-tg_argv-values)
