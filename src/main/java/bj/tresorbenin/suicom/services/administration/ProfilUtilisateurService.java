@@ -5,7 +5,9 @@ import bj.tresorbenin.suicom.repositories.jpa.auth.ProfilUtilisateurRepository;
 import bj.tresorbenin.suicom.services.AbstractBaseService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class ProfilUtilisateurService extends AbstractBaseService<ProfilUtilisateur> {
     @Autowired
     @Getter
