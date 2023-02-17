@@ -1,6 +1,6 @@
 package bj.tresorbenin.suicom.services.security;
 
-import bj.tresorbenin.suicom.entities.auth.ProfilUtilisateur;
+import bj.tresorbenin.suicom.entities.administration.ProfilUtilisateur;
 import bj.tresorbenin.suicom.repositories.jpa.auth.ProfilUtilisateurRepository;
 import bj.tresorbenin.suicom.services.AbstractBaseService;
 import lombok.Getter;

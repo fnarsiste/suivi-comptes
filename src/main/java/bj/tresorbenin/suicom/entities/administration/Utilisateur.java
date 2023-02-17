@@ -1,4 +1,4 @@
-package bj.tresorbenin.suicom.entities.auth;
+package bj.tresorbenin.suicom.entities.administration;
 
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import jakarta.persistence.Entity;
