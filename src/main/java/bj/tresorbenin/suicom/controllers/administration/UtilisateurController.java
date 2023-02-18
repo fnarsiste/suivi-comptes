@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Map;
 
+import static bj.tresorbenin.suicom.utils.JavaUtils.getParams;
+
 @Slf4j
 @Controller
 @SuppressWarnings("all")
@@ -86,6 +88,14 @@ public class UtilisateurController extends MasterController<Utilisateur> {
 
     @Override
     protected void find(Model model, HttpServletRequest request, Map<String, String> params) {
+        String action = getParams(params, "action");
+        model.addAttribute("ACTION", action);
+        switch (action) {
+            case "show-profil":
+                model.addAttribute("chk_show_profil_dialog", true);
+                break;
+        }
+        internView(model);
     }
 
     @Override

@@ -1,0 +1,36 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ajaxlayout.html}">
+<body layout:fragment="ajax-content">
+    <th:block th:if="${chk_show_profil_dialog}">
+    <div class="modal fade" id="profilUtilDialog" tabindex="-1" data-backdrop="static"
+         data-keyboard="false" role="dialog" style="display: none; font-size: 1.2em;" aria-hidden="true">
+        <div class="modal-dialog modal-lg pulse animated" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Consultation / Modification des profils.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6"><div class="form-group"><label for="field-1" class="control-label">Name</label> <input type="text" class="form-control" id="field-1" placeholder="John"></div></div>
+                        <div class="col-md-6"><div class="form-group"><label for="field-2" class="control-label">Surname</label> <input type="text" class="form-control" id="field-2" placeholder="Doe"></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><div class="form-group"><label for="field-3" class="control-label">Address</label> <input type="text" class="form-control" id="field-3" placeholder="Address"></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><div class="form-group no-margin"><label for="field-7" class="control-label">Personal Info</label> <textarea class="form-control" id="field-7" placeholder="Write something about yourself" rows="5"></textarea></div></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button style="font-size: 1em;" type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                    <button style="font-size: 1em;" type="button" class="btn btn-success">Valider les modifications</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>$('#profilUtilDialog').modal('show');</script>
+    </th:block>
+</body>
