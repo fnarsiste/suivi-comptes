@@ -21,6 +21,11 @@ public class BanqueController extends MasterController<Banque> {
     private BanqueService banqueService;
 
     @Override
+    public void beforePersist(Banque entity) throws Exception {
+
+    }
+
+    @Override
     protected void initForm(Model model, String id) throws Exception {
         super.initForm(model, id);
     }

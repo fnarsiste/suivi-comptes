@@ -38,6 +38,8 @@ public abstract class MasterController<T> extends GlobalVars<T> {
 
     public abstract void update(Model model, T form) throws Exception;
 
+    public abstract void beforePersist(T entity) throws Exception;
+
     public MasterController() {
         clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
@@ -325,8 +327,6 @@ public abstract class MasterController<T> extends GlobalVars<T> {
 
     protected void showCreateForm(Model model) throws Exception {
     }
-
-    public void beforePersist(T entity) throws Exception {};
 
     protected String getMiddleUrl(boolean withSibDirectory) {
         String base = APP_module;

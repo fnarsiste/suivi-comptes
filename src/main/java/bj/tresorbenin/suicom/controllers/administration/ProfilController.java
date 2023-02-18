@@ -21,6 +21,11 @@ public class ProfilController extends MasterController<Profil> {
     private ProfilService profilService;
 
     @Override
+    public void beforePersist(Profil entity) throws Exception {
+
+    }
+
+    @Override
     protected void initForm(Model model, String id) throws Exception {
         super.initForm(model, id);
     }
