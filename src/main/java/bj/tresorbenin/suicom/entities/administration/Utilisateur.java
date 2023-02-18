@@ -3,14 +3,12 @@ package bj.tresorbenin.suicom.entities.administration;
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import bj.tresorbenin.suicom.entities.referentiels.Agent;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
