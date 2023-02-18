@@ -4,8 +4,8 @@
       layout:decorate="~{ajaxlayout.html}">
 <body layout:fragment="ajax-content">
     <th:block th:if="${chk_show_profil_dialog}">
-    <div class="modal fade" id="profilUtilDialog" tabindex="-1" data-backdrop="static"
-         data-keyboard="false" role="dialog" style="display: none; font-size: 1.2em;" aria-hidden="true">
+    <div class="modal fade" id="profilUtilDialog" tabindex="-1" data-backdrop__="static"
+         data-keyboard__="false" role="dialog" style="display: none; font-size: 1.1em;" aria-hidden="true">
         <div class="modal-dialog modal-lg pulse animated" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -14,15 +14,39 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6"><div class="form-group"><label for="field-1" class="control-label">Name</label> <input type="text" class="form-control" id="field-1" placeholder="John"></div></div>
-                        <div class="col-md-6"><div class="form-group"><label for="field-2" class="control-label">Surname</label> <input type="text" class="form-control" id="field-2" placeholder="Doe"></div></div>
+                        <div class="col-md-4"><div class="form-group"><label class="control-label">Login ID</label> <input type="text" class="form-control" readonly th:value="${user.login}"></div></div>
+                        <div class="col-md-4"><div class="form-group"><label class="control-label">Matricule</label> <input type="text" class="form-control" readonly th:value="${user.agent.matricule}"></div></div>
+                        <div class="col-md-4"><div class="form-group"><label class="control-label">Adresse email</label> <input type="text" class="form-control" readonly th:value="${user.agent.emailAddress}"></div></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12"><div class="form-group"><label for="field-3" class="control-label">Address</label> <input type="text" class="form-control" id="field-3" placeholder="Address"></div></div>
+                        <div class="col-md-12"><div class="form-group"><input type="text" class="form-control" readonly th:value="${user.fullname}"></div></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12"><div class="form-group no-margin"><label for="field-7" class="control-label">Personal Info</label> <textarea class="form-control" id="field-7" placeholder="Write something about yourself" rows="5"></textarea></div></div>
-                    </div>
+                    <table class="table table-striped table-bordered w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Profil</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Activé ?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SUPER</td>
+                                <td>SUPER ADMINISTRATEUR</td>
+                                <td>29/01/2023</td>
+                                <td>
+                                    <div class="switch-field">
+                                        <input type="radio" id="status-actif" name="status" value="1" />
+                                        <label for="status-actif">Oui</label>
+                                        <input checked type="radio" id="status-desactive" name="status" value="0" />
+                                        <label for="status-desactive"><b>Non</b></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button style="font-size: 1em;" type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>

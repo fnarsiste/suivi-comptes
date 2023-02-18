@@ -24,7 +24,7 @@ import static bj.tresorbenin.suicom.utils.JavaUtils.getParams;
 @RequestMapping("/{APP_module:administration}/{APP_directory:users}")
 public class UtilisateurController extends MasterController<Utilisateur> {
     @Autowired
-    private UtilisateurService useurService;
+    private UtilisateurService userService;
 
     @Autowired
     private AgentService agentService;
@@ -50,7 +50,7 @@ public class UtilisateurController extends MasterController<Utilisateur> {
     @Override
     public void showList(Model model) throws Exception {
         pageTitle = "MSG.title.utilisateur.list";
-        entities = useurService.getAll();
+        entities = userService.getAll();
         super.showList(model);
     }
 
@@ -66,24 +66,24 @@ public class UtilisateurController extends MasterController<Utilisateur> {
     @Override
     public void insert(Model model, Utilisateur form) throws Exception {
         beforePersist(form);
-        useurService.create(form);
+        userService.create(form);
         redirectView();
     }
 
     @Override
     public void update(Model model, Utilisateur form) throws Exception {
-        useurService.update(form);
+        userService.update(form);
         redirectView();
     }
 
     @Override
     public void delete(Model model, Object id) throws Exception {
-        useurService.delete(Long.valueOf(id.toString()));
+        userService.delete(Long.valueOf(id.toString()));
     }
 
     @Override
     public Utilisateur getById(Object id) {
-        return useurService.get(id);
+        return userService.get(id);
     }
 
     @Override
@@ -92,6 +92,9 @@ public class UtilisateurController extends MasterController<Utilisateur> {
         model.addAttribute("ACTION", action);
         switch (action) {
             case "show-profil":
+                long id = Long.parseLong(getParams(params, "userid"));
+                Utilisateur user = userService.get(id);
+                model.addAttribute("user", user);
                 model.addAttribute("chk_show_profil_dialog", true);
                 break;
         }

@@ -33,7 +33,7 @@
                                     <a title="Modifier la ligne" class="btn btn-sm btn-info js-tooltip" style="float: none; margin: 5px;" th:href="@{|${pageRoute}${item.id}/modifier|}" href=""><span class="mdi mdi-pencil"></span></a>
                                     <a title="Supprimer la ligne" class="js-app-button-delete js-tooltip btn btn-sm btn-danger ml-1"
                                        style="float: none; margin: 5px;" th:data-id="${item.id}" data-token="1234567890" th:data-href="@{${pageRoute}}" href=""><span class="mdi mdi-delete"></span></a>
-                                    <a title="Voir / Modifier les profils" class="js-app-button-profils  btn btn-sm btn-warning js-tooltip"
+                                    <a th:data-id="${item.id}" title="Voir / Modifier les profils" class="js-app-button-profils  btn btn-sm btn-warning js-tooltip"
                                        style="float: none; margin: 5px;" href=""><span class="mdi mdi-view-list"></span></a>
                                 </div>
                             </td>
@@ -52,7 +52,8 @@
         function runOnceAllLoaded() {
             $('.js-app-button-profils').on('click', function(e) {
                 e.preventDefault();
-                const param = "action=show-profil&user=1";
+                const {id} = $(this).data();
+                const param = "action=show-profil&userid=" + id;
                 onChange(param, 'v', '', ''); //, format, prop_cible, onSuccess, onError);
             });
         }
