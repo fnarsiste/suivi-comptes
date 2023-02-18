@@ -9,9 +9,9 @@ public class ConstantUtils {
     public static final String FILE_HTML = "html";
     public static final String SCREEN_FORM = "form";
     public static final String SCREEN_LIST = "liste";
-    public static final String SCREEN_FIND = "search";
+    public static final String SCREEN_FIND = "find";
     public static final String CRUD_CREATE = "nouveau";
-    public static final String CRUD_READ_FIND = "search";
+    public static final String CRUD_READ_FIND = "find";
     public static final String CRUD_READ_ALL = "liste";
     public static final String CRUD_UPDATE = "modifier";
     public static final String CRUD_DIFFERE = "differe";

@@ -29,6 +29,8 @@
        <link th:href="@{/assets/css/custom-loader.css}" rel="stylesheet" type="text/css"/>
       <script>
         let TABLE_SORTING = 0;
+        let _FIND_PARTS_DELIMITER = "[[${_FIND_PARTS_DELIMITER}]]";
+        console.log(_FIND_PARTS_DELIMITER);
         const LANG = {
             "sProcessing": "Traitement en cours...",
             "sSearch": "Rechercher&nbsp;:",

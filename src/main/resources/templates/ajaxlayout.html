@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body layout:fragment="ajax-content">
+  Affichage du contenu du find
+  <script th:if="${HAS_ERROR != true && CATCH_ERROR==true}" type="text/javascript">
+      var frmMsgErreur = "[[${ERROR_TXT_MSG}]]";
+      if (frmMsgErreur != '') errorBox(frmMsgErreur);
+  </script>
+</body>
+</html>
