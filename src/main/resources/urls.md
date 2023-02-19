@@ -7,3 +7,4 @@
 [Material Design icons (mdi-*)](https://pictogrammers.com/library/mdi/)   
 [How to set TG_ARGV values](https://bytes.com/topic/postgresql/answers/667132-how-set-tg_argv-values)   
 [One To One Example | Spring Data JPA](https://www.stackchief.com/blog/One%20To%20One%20Example%20%7C%20Spring%20Data%20JPA#)   
+[The best way to map a JPA and Hibernate many-to-many association with extra columns](https://vladmihalcea.com/the-best-way-to-map-a-many-to-many-association-with-extra-columns-when-using-jpa-and-hibernate/)   
