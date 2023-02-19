@@ -1,13 +1,19 @@
 package bj.tresorbenin.suicom.controllers.administration;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
-import bj.tresorbenin.suicom.entities.administration.Utilisateur;
+import bj.tresorbenin.suicom.entities.administration.Role;
+import bj.tresorbenin.suicom.entities.administration.User;
+import bj.tresorbenin.suicom.entities.administration.UserRole;
 import bj.tresorbenin.suicom.entities.referentiels.Agent;
+import bj.tresorbenin.suicom.services.administration.RoleService;
+import bj.tresorbenin.suicom.services.administration.UserRoleService;
 import bj.tresorbenin.suicom.services.administration.UtilisateurService;
 import bj.tresorbenin.suicom.services.referentiels.AgentService;
 import bj.tresorbenin.suicom.utils.JavaUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +22,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Map;
 
+import static bj.tresorbenin.suicom.utils.ConstantUtils.CATCH_ERROR;
 import static bj.tresorbenin.suicom.utils.JavaUtils.getParams;
 
 @Slf4j
 @Controller
 @SuppressWarnings("all")
 @RequestMapping("/{APP_module:administration}/{APP_directory:users}")
-public class UtilisateurController extends MasterController<Utilisateur> {
+public class UtilisateurController extends MasterController<User> {
     @Autowired
     private UtilisateurService userService;
 
     @Autowired
     private AgentService agentService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     protected void initForm(Model model, String id) throws Exception {
@@ -43,7 +56,7 @@ public class UtilisateurController extends MasterController<Utilisateur> {
     }
 
     @Override
-    protected void showUpdateForm(Model model, Utilisateur entity) throws Exception {
+    protected void showUpdateForm(Model model, User entity) throws Exception {
         pageTitle = "MSG.title.utilisateur.edit";
     }
 
@@ -55,7 +68,7 @@ public class UtilisateurController extends MasterController<Utilisateur> {
     }
 
     @Override
-    public void beforePersist(Utilisateur entity) throws Exception {
+    public void beforePersist(User entity) throws Exception {
         Agent agent = agentService.get(entity.getAgent().getId());
         entity.setAgent(agent);
         entity.setOtpCode(JavaUtils.generateOtpCode(6));
@@ -64,14 +77,14 @@ public class UtilisateurController extends MasterController<Utilisateur> {
     }
 
     @Override
-    public void insert(Model model, Utilisateur form) throws Exception {
+    public void insert(Model model, User form) throws Exception {
         beforePersist(form);
         userService.create(form);
         redirectView();
     }
 
     @Override
-    public void update(Model model, Utilisateur form) throws Exception {
+    public void update(Model model, User form) throws Exception {
         userService.update(form);
         redirectView();
     }
@@ -82,7 +95,7 @@ public class UtilisateurController extends MasterController<Utilisateur> {
     }
 
     @Override
-    public Utilisateur getById(Object id) {
+    public User getById(Object id) {
         return userService.get(id);
     }
 
@@ -93,9 +106,29 @@ public class UtilisateurController extends MasterController<Utilisateur> {
         switch (action) {
             case "show-profil":
                 long id = Long.parseLong(getParams(params, "userid"));
-                Utilisateur user = userService.get(id);
+                User user = userService.get(id);
                 model.addAttribute("user", user);
+                List<UserRole> userRoles = userRoleService.findByUser(user);
+                model.addAttribute("userRoles", userRoles);
+                model.addAttribute("hasRole", !userRoles.isEmpty());
+                List<Role> notActiveRoles = roleService.getNotActiveRoleByUser(user);
+                model.addAttribute("notActiveRoles", notActiveRoles);
+                model.addAttribute("hasInactRole", !notActiveRoles.isEmpty());
                 model.addAttribute("chk_show_profil_dialog", true);
+                break;
+            case "save-profil-data" :
+                log.info(params.toString());
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = (JSONObject) (new JSONParser()).parse(getParams(params, "json"));
+                } catch (Exception e) {
+                    model.addAttribute("HAS_ERROR", !true);
+                    model.addAttribute(CATCH_ERROR, true);
+                    model.addAttribute("ERROR_TXT_MSG", e.getMessage());
+                    break;
+                }
+                log.info(jsonObject.toJSONString());
+                model.addAttribute("chk_profil_saved", true);
                 break;
         }
         internView(model);

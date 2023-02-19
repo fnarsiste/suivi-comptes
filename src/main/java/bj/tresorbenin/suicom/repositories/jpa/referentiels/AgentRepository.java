@@ -11,7 +11,7 @@ public interface AgentRepository extends BaseRepository<Agent> {
 
     //@Query("FROM #{#entityName} WHERE dateCessation = 'Infinity' ORDER BY id DESC")
     @Query("SELECT a FROM Agent a WHERE a.dateCessation = 'Infinity' " +
-            "and a.id NOT IN (SELECT u.agent.id FROM Utilisateur u WHERE u.dateCessation = 'Infinity') " +
+            "and a.id NOT IN (SELECT u.agent.id FROM User u WHERE u.dateCessation = 'Infinity') " +
             "ORDER BY lastName, firstName")
     Set<Agent> getAccountableAgent();
 
