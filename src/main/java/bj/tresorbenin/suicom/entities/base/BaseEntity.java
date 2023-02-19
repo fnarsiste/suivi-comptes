@@ -34,7 +34,7 @@ public class BaseEntity implements Serializable, Cloneable {
     @Comment("ID de la ligne (sequentiel).")
     protected Long id;
 
-    @Column(name = "code", length = 32, nullable = false)
+    @Column(name = "code", length = 32)
     @Comment("Code auto généré via trigger ou fourni.")
     protected String code;
 

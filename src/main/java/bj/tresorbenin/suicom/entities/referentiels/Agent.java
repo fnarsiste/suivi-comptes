@@ -1,6 +1,6 @@
 package bj.tresorbenin.suicom.entities.referentiels;
 
-import bj.tresorbenin.suicom.entities.administration.Utilisateur;
+import bj.tresorbenin.suicom.entities.administration.User;
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import org.hibernate.annotations.Comment;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "Agent")
 @Table(name = "agents",
         indexes = {
                 @Index(name = "agt_code_ix", columnList = "code"),
@@ -47,7 +47,7 @@ public class Agent extends BaseEntity {
     String adresse;
 
     @OneToOne(optional = false, mappedBy = "agent", cascade = CascadeType.ALL)
-    private Utilisateur user;
+    private User user;
 
     public String getFullnameCombo() {
         return String.format("%s - %s %s", getMatricule(), getFirstName(), getLastName());

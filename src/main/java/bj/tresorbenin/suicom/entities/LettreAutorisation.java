@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "LettreAutorisation")
 @Table(name="autorisations")
 public class LettreAutorisation extends BaseEntity {
     String refLettre;

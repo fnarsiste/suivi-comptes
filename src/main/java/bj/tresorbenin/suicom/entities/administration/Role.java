@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "Role")
 @Table(name = "profils",
         indexes = {
                 @Index(name = "pf_code_ix", columnList = "code"),
@@ -22,5 +22,5 @@ import lombok.Setter;
                 @UniqueConstraint(name = "PROFIL_UK", columnNames = {"code", "date_cessation"})
         }
 )
-public class Profil extends NamedEntity {
+public class Role extends NamedEntity {
 }

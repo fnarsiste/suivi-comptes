@@ -11,7 +11,7 @@ import org.hibernate.annotations.Comment;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "User")
 @Table(name = "users",
         indexes = {
                 @Index(name = "usr_code_ix", columnList = "code"),
@@ -21,7 +21,7 @@ import org.hibernate.annotations.Comment;
                 @UniqueConstraint(name = "USERS_UK", columnNames = {"code", "date_cessation"})
         }
 )
-public class Utilisateur extends BaseEntity {
+public class User extends BaseEntity {
 
     @Column(name = "login", nullable = false, length = 32)
     @Comment("Login ID.")

@@ -12,13 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="structures_titulaires")
+@Entity(name = "StructureTitulaire")
+@Table(name = "structures_titulaires")
 public class StructureTitulaire extends NamedEntity {
     String codeStruct;
     String adress;
 
-    public String getDenomination(){
+    public String getDenomination() {
         return getLibelle();
     }
 
