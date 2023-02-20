@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "Fonction")
 @Table(
         name = "fonctions",
         indexes = {

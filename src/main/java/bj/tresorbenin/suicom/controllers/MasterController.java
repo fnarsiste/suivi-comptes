@@ -38,13 +38,15 @@ public abstract class MasterController<T> extends GlobalVars<T> {
 
     public abstract void update(Model model, T form) throws Exception;
 
+    public abstract void beforePersist(T entity) throws Exception;
+
     public MasterController() {
         clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     @GetMapping({
-            "/{id}/{APP_ecran:modifier|liste|search|differe}",
-            "/{APP_ecran:nouveau|liste|search}"
+            "/{id}/{APP_ecran:modifier|liste|find|differe}",
+            "/{APP_ecran:nouveau|liste|find}"
     })
     public String seutp(@ModelAttribute("List") T list, BindingResult result, Model model,
                         HttpServletRequest request, @RequestParam Map<String, String> params,
@@ -106,6 +108,21 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         return this.view;
     }
 
+    @PostMapping(
+            value = { "/{APP_action:nouveau}", "/{id}/{APP_action:modifier}", "/{id}/{APP_action:differe}" })
+    public @ResponseBody String doActionsCreateAndUpdate(@Validated @ModelAttribute(MODEL_ATTRIBUTE_FORM) T form, BindingResult result, Model model,
+                                                         HttpServletRequest request, @RequestParam Map<String, String> params,
+                                                         RedirectAttributes redirectAttrib) throws Exception {
+        return doActions(form, result, model, request, params, redirectAttrib);
+    }
+
+    @PostMapping(
+            value = { "/{APP_action:find}", "/{id}/{APP_action:find}", "/{id}/{APP_action:find}" })
+    public String doActionsFind(@Validated @ModelAttribute(MODEL_ATTRIBUTE_FORM) T form, BindingResult result, Model model, HttpServletRequest request,
+                                @RequestParam Map<String, String> params, RedirectAttributes redirectAttrib) throws Exception {
+        return doActions(form, result, model, request, params, redirectAttrib);
+    }
+
     @PostMapping("/{id}/{APP_ecran:supprimer}")
     public @ResponseBody String doDeleteRecord(
             Model model, @PathVariable(name = "id") String id,
@@ -123,21 +140,6 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         jsonResult.put("result", success);
         jsonResult.put("message",operationMsg);
         return jsonResult.toJSONString();
-    }
-
-    @PostMapping(
-            value = { "/{APP_action:nouveau}", "/{id}/{APP_action:modifier}", "/{id}/{APP_action:differe}" })
-    public @ResponseBody String doActionsCreateAndUpdate(@Validated @ModelAttribute(MODEL_ATTRIBUTE_FORM) T form, BindingResult result, Model model,
-                                                         HttpServletRequest request, @RequestParam Map<String, String> params,
-                                                         RedirectAttributes redirectAttrib) throws Exception {
-        return doActions(form, result, model, request, params, redirectAttrib);
-    }
-
-    @PostMapping(
-            value = { "/{APP_action:search}", "/{id}/{APP_action:search}", "/{id}/{APP_action:search}" })
-    public String doActionsFind(@Validated @ModelAttribute(MODEL_ATTRIBUTE_FORM) T form, BindingResult result, Model model, HttpServletRequest request,
-                                @RequestParam Map<String, String> params, RedirectAttributes redirectAttrib) throws Exception {
-        return doActions(form, result, model, request, params, redirectAttrib);
     }
 
     private void doCommonCall(Model model, HttpServletRequest request, HttpMethod httpMethod, Map<String, String> params, String type) {
@@ -313,7 +315,7 @@ public abstract class MasterController<T> extends GlobalVars<T> {
         model.addAttribute(MODEL_ATTRIBUTE_CONTENT_FILE, getMiddleUrl(false) + "/" + pageJsp);
         model.addAttribute(MODEL_ATTRIBUTE_NAVBAR, navbar);
         /** set la valeur du template **/
-        this.view = ajax == null ? template : TEMPLATE_AJAX;
+        this.view = template; //ajax == null ? template : TEMPLATE_AJAX;
     }
 
     protected T getById(Object id) throws Exception {

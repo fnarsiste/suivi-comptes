@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "Piece")
 @Table(name="pieces")
 public class Piece extends NamedEntity {
     String refPiece;

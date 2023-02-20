@@ -1,8 +1,8 @@
 package bj.tresorbenin.suicom.controllers.administration;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
-import bj.tresorbenin.suicom.entities.administration.Profil;
-import bj.tresorbenin.suicom.services.security.ProfilService;
+import bj.tresorbenin.suicom.entities.administration.Role;
+import bj.tresorbenin.suicom.services.administration.RoleService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,14 @@ import java.util.Map;
 @Controller
 @SuppressWarnings("all")
 @RequestMapping("/{APP_module:administration}/{APP_directory:profils}")
-public class ProfilController extends MasterController<Profil> {
+public class ProfilController extends MasterController<Role> {
     @Autowired
-    private ProfilService profilService;
+    private RoleService profilService;
+
+    @Override
+    public void beforePersist(Role entity) throws Exception {
+
+    }
 
     @Override
     protected void initForm(Model model, String id) throws Exception {
@@ -31,7 +36,7 @@ public class ProfilController extends MasterController<Profil> {
     }
 
     @Override
-    protected void showUpdateForm(Model model, Profil entity) throws Exception {
+    protected void showUpdateForm(Model model, Role entity) throws Exception {
         pageTitle = "MSG.title.profils.edit";
     }
 
@@ -43,13 +48,13 @@ public class ProfilController extends MasterController<Profil> {
     }
 
     @Override
-    public void insert(Model model, Profil form) throws Exception {
+    public void insert(Model model, Role form) throws Exception {
         profilService.create(form);
         redirectView();
     }
 
     @Override
-    public void update(Model model, Profil form) throws Exception {
+    public void update(Model model, Role form) throws Exception {
         profilService.update(form);
         redirectView();
     }
@@ -60,7 +65,7 @@ public class ProfilController extends MasterController<Profil> {
     }
 
     @Override
-    public Profil getById(Object id) {
+    public Role getById(Object id) {
         return profilService.get(id);
     }
 

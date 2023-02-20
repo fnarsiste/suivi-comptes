@@ -1,9 +1,7 @@
 package bj.tresorbenin.suicom.controllers.referentiels;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
-import bj.tresorbenin.suicom.entities.referentiels.Agent;
 import bj.tresorbenin.suicom.entities.referentiels.Statut;
-import bj.tresorbenin.suicom.services.referentiels.AgentService;
 import bj.tresorbenin.suicom.services.referentiels.StatutService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +19,11 @@ import java.util.Map;
 public class StatutController extends MasterController<Statut> {
     @Autowired
     private StatutService statutService;
+
+    @Override
+    public void beforePersist(Statut entity) throws Exception {
+
+    }
 
     @Override
     protected void initForm(Model model, String id) throws Exception {

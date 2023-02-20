@@ -12,7 +12,7 @@ import org.hibernate.annotations.Comment;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "Banque")
 @Table(
         name = "banques",
         indexes = {

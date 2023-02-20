@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "Statut")
 @Table(name = "statuts",
         indexes = {
                 @Index(name = "stt_code_ix", columnList = "code"),

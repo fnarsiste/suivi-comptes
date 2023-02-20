@@ -11,11 +11,32 @@ function showSpinner(){
 }
 
 function encodeValue(value){
-    encodeURIComponent(value);
+    return encodeURIComponent(value);
 }
 
 function showAnimatedError(errorDiv, message) {
     console.log({errorDiv, message});
+}
+
+function closeModal(id) {
+    $('#' + id).modal('hide');
+     $('.modal-backdrop').remove(); //fade show
+}
+
+function serializeObject(form){
+    let o = {};
+    let a = form.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
 }
 
 function appDeleteListeRow(fn, e){
@@ -40,7 +61,7 @@ function appDeleteListeRow(fn, e){
             contentType: 'application/json',
             success : function(response) {
                 hideSpinner();
-                if(!response.result) return alertMessageDanger(response.message);
+                if(!response.result) return errorBox(response.message);
                 defaultAlertAction(response.message, function() {
                     document.location.reload();
                 });
@@ -52,9 +73,7 @@ function appDeleteListeRow(fn, e){
     });
 }
 
-function msgBox(message) {
-    defaultAlertAction(message);
-}
+function msgBox(message) {defaultAlertAction(message);}
 
 function showSwallMessage(title, message, type, callback) {
     //"warning", "error", "success" and "info"
@@ -75,7 +94,7 @@ function defaultAlertAction(message, callback) {
     return true;
 }
 
-function alertMessageDanger(message, callback) {
+function errorBox(message, callback) {
     showSwallMessage(null, message, 'error', callback);
     return true;
 }
@@ -205,8 +224,8 @@ function doSubmitForm(form, event) {
 
 function onSubmit(targetUrl, formData, options) {
 	let defaultOptions = {
-        successCallback: null,
-        errorCallback: null,
+        onSuccess: null,
+        onError: null,
         errorDiv: 'frm_error'
      };
 
@@ -229,8 +248,8 @@ function onSubmit(targetUrl, formData, options) {
                     defaultAlertAction(response.message);
                 }
             } else {
-                if (!emptyValue(options.successCallback)) {
-                    options.successCallback(response);
+                if (!emptyValue(options.onSuccess)) {
+                    options.onSuccess(response);
                 } else {
                     showOperationEndedMsg(response.msgType, response.endPage, {handle: response.handle, remaining: response.remaining});
                 }
@@ -238,7 +257,7 @@ function onSubmit(targetUrl, formData, options) {
         },
         error : function() {
             hideSpinner();
-            if (!emptyValue(options.errorCallback)) options.errorCallback();
+            if (!emptyValue(options.onError)) options.onError();
             else defaultAlertAction("<span style='color:red'>Une erreur est survenue lors de l'opération</span>");
         }
     });
@@ -308,6 +327,83 @@ function appExit(fn, e) {
     });
 }
 
+function onChange(param, cible, format, prop_cible, onSuccess, onError) {
+	console.log(param);
+	var url = "find?ajax=true", type = "GET", data = null;
+	if (param) url += "&" + param;
+	doAjax(url, data, type, cible, format, prop_cible, onSuccess, onError);
+	return false;
+}
+
+function doAjax(v_url, v_data, v_type, cible, format, prop_cible, onSuccess, onError) {
+	if (v_url == null) errorBox("Veuillez pr&eacute;ciser l'url !");
+	else if (v_type == null) errorBox("Veuillez pr&eacute;ciser le type d'envoi !");
+	else if (cible == null) errorBox("Veuillez pr&eacute;ciser la cible d'affichage !");
+	else if (format == null) errorBox("Veuillez pr&eacute;ciser le format !");
+	else {
+		showSpinner();
+		$.ajax({
+            type : v_type,
+            url : v_url,
+            data : v_data,
+            success : function(response) {
+                // TODO reloadSessionTimeoutListening();
+                hideSpinner();
+                // we have the response
+                var cibleTab = cible.split(",");
+                var formatTab = format.split(",");
+                var prop_cibleTab = prop_cible.split(",");
+                var responseTab = response.split(_FIND_PARTS_DELIMITER || "@@@"); // "_FIND_PARTS_DELIMITER" est defini dans "head.jsp"
+
+                for (var i = 0; i < cibleTab.length; i++) {
+                    var v_format = (formatTab.length > 1) ? formatTab[i] : format;
+                    var v_cible = cibleTab[i];
+                    var v_prop_cible = (prop_cibleTab.length > 1) ? prop_cibleTab[i] : prop_cible;
+                    var v_response = $.trim(responseTab[i]);
+                    var $cible = $('#' + v_cible);
+
+                    if(v_cible=='v' || v_cible=='w' || v_cible=='y') $cible.css('display','block');
+
+                    if (v_format == "text") $cible.val(v_response);
+                    else if (v_format == "select") {
+                        $cible.html('');
+                        $cible.append(v_response);
+                    } else if (v_format == "prop") $cible.attr(v_prop_cible, v_response);
+                    else if (v_format == "redirect") window.location.replace(v_cible);
+                    else if (v_format == "redirect-blank") window.open(v_cible, '_blank');
+                    else{
+                        if((v_cible=='v' || v_cible=='w' || v_cible=='y') && v_response.startsWith('{')){
+                            $cible.css('display','none');
+                        }
+                        $cible.html(v_response);
+                    }
+                    if ($cible.is('select')) $cible.trigger('change.select2');
+                }
+                if (onSuccess) onSuccess(response);
+            },
+            error : function(jqXHR, exception) {
+                //TODO reloadSessionTimeoutListening();
+                if (jqXHR.status == 502) {
+                    showSpinner();
+                    setTimeout(() => location.reload(), 60000);
+                } else {
+                    hideSpinner();
+                    var error_message = '';
+                    if (jqXHR.status === 0) error_message = 'Pas connecté. Merci de vérifier le réseau.';
+                    else if (jqXHR.status == 404) error_message = 'Page demandée introuvable. [404].';
+                    else if (jqXHR.status == 500) error_message = 'Erreur interne au serveur [500].';
+                    else if (exception === 'parsererror') error_message = 'Requête JSON parse failed.';
+                    else if (exception === 'timeout') error_message = 'Erreur delai depassé.';
+                    else if (exception === 'abort') error_message = 'Requête ajax demandée a été interrompue.';
+                    else error_message = 'Erreur interne survenue : ' + jqXHR.responseText;
+                    errorBox('Erreur rencontrée : ' + error_message);
+                    if (onError) onError(jqXHR, exception);
+                }
+            }
+        });
+	}
+}
+
 $(document).ready(function(){
    // Initalize data table with buttons
    const table = $('#datatable-buttons').DataTable({
@@ -327,6 +423,10 @@ $(document).ready(function(){
    $('.js-app-button-delete').on('click', function (e) {appDeleteListeRow(this, e)});
     // Convertir en maj les champs tagués de 'js-to-upper'
    $('.js-to-upper').on('change', function (){$(this).val($(this).val().toUpperCase());});
+
+   $('.select2').select2({width: '100%'});
+
+   $('.js-tooltip').each(function(i) {$(this).tooltip({placement: 'bottom'});})
 
    // Toutes les pages qui aurient définies cette fonction
     if(typeof runOnceAllLoaded === 'function') runOnceAllLoaded();

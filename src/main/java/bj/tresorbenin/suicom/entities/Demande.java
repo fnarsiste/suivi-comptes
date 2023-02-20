@@ -12,11 +12,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="demandes")
+@Entity(name = "Demande")
+@Table(name = "demandes")
 public class Demande extends BaseEntity {
-        String refDem;
-        String objet;
-        String dateDem;
-        String lieu;
-        }
+    String refDem;
+    String objet;
+    String dateDem;
+    String lieu;
+}

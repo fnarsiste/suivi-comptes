@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{mainlayout.html}">
+<body >
+<section layout:fragment="core-content">
+    <div class="row" th:replace="~{fragments/includes.html :: newEntityButtonArea}"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatable-buttons" class="table table-striped table-bordered w-100">
+                        <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Login</th>
+                            <th>Agent</th>
+                            <th>Email</th>
+                            <th>Etat</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${List}">
+                            <td><b th:text="${item.agent.matricule}">...</b></td>
+                            <td><b th:text="${item.login}">...</b></td>
+                            <td><b th:utext="${item.fullname}">...</b></td>
+                            <td><b th:text="${item.agent.emailAddress}">...</b></td>
+                            <td><b th:text="${item.active ? 'Actif' : 'Désactivé'}">...</b></td>
+                            <td style="white-space: nowrap; width: 15%;">
+                                <div class="btn-group btn-group-sm" style="float: none;">
+                                    <a title="Modifier la ligne" class="btn btn-sm btn-info js-tooltip" style="float: none; margin: 5px;" th:href="@{|${pageRoute}${item.id}/modifier|}" href=""><span class="mdi mdi-pencil"></span></a>
+                                    <a title="Supprimer la ligne" class="js-app-button-delete js-tooltip btn btn-sm btn-danger ml-1"
+                                       style="float: none; margin: 5px;" th:data-id="${item.id}" data-token="1234567890" th:data-href="@{${pageRoute}}" href=""><span class="mdi mdi-delete"></span></a>
+                                    <a th:data-id="${item.id}" title="Voir / Modifier les profils" class="js-app-button-profils  btn btn-sm btn-warning js-tooltip"
+                                       style="float: none; margin: 5px;" href=""><span class="mdi mdi-view-list"></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    Notes :
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        TABLE_SORTING = 2;
+        function runOnceAllLoaded() {
+            $('.js-app-button-profils').on('click', function(e) {
+                e.preventDefault();
+                const {id} = $(this).data();
+                const param = "action=show-profil&userid=" + id;
+                onChange(param, 'v', '', ''); //, format, prop_cible, onSuccess, onError);
+            });
+        }
+    </script>
+</section>
+</body>
+</html>

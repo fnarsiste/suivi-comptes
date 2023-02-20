@@ -32,7 +32,7 @@ public class GlobalVars<T> implements Serializable {
    protected String operationMsg;
    protected String headerTitle;
    protected String pageTitle = "MSG.blank";
-   protected String findPartsDelimiter = "||";
+   protected String findPartsDelimiter = "@@@";
    protected String navbar;
    protected String pageRoute;
 

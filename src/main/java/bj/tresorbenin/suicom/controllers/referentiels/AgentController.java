@@ -21,6 +21,11 @@ public class AgentController extends MasterController<Agent> {
     private AgentService agentService;
 
     @Override
+    public void beforePersist(Agent entity) throws Exception {
+
+    }
+
+    @Override
     protected void initForm(Model model, String id) throws Exception {
         super.initForm(model, id);
     }

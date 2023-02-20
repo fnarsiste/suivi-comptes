@@ -21,6 +21,11 @@ public class FonctionController extends MasterController<Fonction> {
     private FonctionService fonctionService;
 
     @Override
+    public void beforePersist(Fonction entity) throws Exception {
+
+    }
+
+    @Override
     protected void initForm(Model model, String id) throws Exception {
         super.initForm(model, id);
     }

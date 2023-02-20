@@ -1,0 +1,146 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ajaxlayout.html}">
+<body layout:fragment="ajax-content">
+
+    <th:block th:if="${chk_profil_saved}">
+        <script>
+            closeModal('profilUtilDialog');
+            msgBox("MaJ effectively aapplied.");
+        </script>
+    </th:block>
+
+    <th:block th:if="${chk_show_profil_dialog}">
+    <div class="modal fade" id="profilUtilDialog" tabindex="-1" data-backdrop="static"
+         data-keyboard="false" role="dialog" style="font-size: 1.1em;" aria-hidden="true">
+        <div class="modal-dialog modal-lg pulse animated" role="document">
+            <form action="">
+                <input type="hidden" name="userid" th:value="${user.id}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Consultation / Modification des profils.</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4"><div class="form-group"><label class="control-label">Login ID</label> <input type="text" class="form-control" readonly th:value="${user.login}"></div></div>
+                            <div class="col-md-4"><div class="form-group"><label class="control-label">Matricule</label> <input type="text" class="form-control" readonly th:value="${user.agent.matricule}"></div></div>
+                            <div class="col-md-4"><div class="form-group"><label class="control-label">Adresse email</label> <input type="text" class="form-control" readonly th:value="${user.agent.emailAddress}"></div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"><div class="form-group"><input type="text" class="form-control" readonly th:value="${user.fullname}"></div></div>
+                        </div>
+                        <div class="main-tabs">
+                            <div class="tab-6">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#pfuactifs" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-user mr-1"></i>
+                                            Profils actifs
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#pfulist" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-list mr-1"></i>
+                                            Profils non accordés
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content bg-white">
+                                    <div class="tab-pane active pt-3" id="pfuactifs">
+                                        <div class="alert alert-danger text-center" th:if="${not hasRole}">
+                                            <h5>AUCUN N'EST ACCORDÉ A CET UTILISATEUR</h5>
+                                            <b>Allez à l'onglet suivant pour lui accorder des droits.</b>
+                                        </div>
+                                        <table th:if="${hasRole}" class="table table-striped table-bordered w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Code</th>
+                                                    <th class="text-center">Profil</th>
+                                                    <th class="text-center">Date</th>
+                                                    <th class="text-center">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="item : ${userRoles}" th:with="name=|actif-${#strings.toLowerCase(item.role.code)}|">
+                                                    <td>[[${item.role.code}]]</td>
+                                                    <td>[[${item.role.libelle}]]</td>
+                                                    <td>[[${#calendars.format(item.dateCreation,'dd/MM/yyyy')}]]</td>
+                                                    <td>
+                                                        <div class="switch-field">
+                                                            <input th:checked="${item.active}" type="radio" th:id="|${name}-act|" th:name="${name}" value="1" />
+                                                            <label th:for="|${name}-act|">Activer</label>
+                                                            <input th:checked="${!item.active}" type="radio" th:id="|${name}-dsc|" th:name="${name}" value="0" />
+                                                            <label th:for="|${name}-dsc|"><b>Retirer</b></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane pt-3" id="pfulist">
+                                        <div class="alert alert-danger text-center" th:if="${not hasInactRole}">
+                                            <h5>AUCUN PROFIL N'EST DISPONIBLE POUR ATTRIBUTION A CET UTILISATEUR</h5>
+                                            <b>Allez à l'onglet précédent pour lui retirer des droits.</b>
+                                        </div>
+                                        <table th:if="${hasInactRole}" class="table table-striped table-bordered w-100">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Code</th>
+                                                <th class="text-center">Profil</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="role : ${notActiveRoles}" th:with="name=|inactif-${#strings.toLowerCase(role.code)}|">
+                                                <td>[[${role.code}]]</td>
+                                                <td>[[${role.libelle}]]</td>
+                                                <td>
+                                                    <div class="switch-field">
+                                                        <input type="radio" th:id="|${name}-act|" th:name="${name}" value="1" />
+                                                        <label th:for="|${name}-act|">Attribuer</label>
+                                                        <input checked type="radio" th:id="|${name}-dsc|" th:name="${name}" value="0" />
+                                                        <label th:for="|${name}-dsc|"><b>Non activé</b></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button style="font-size: 1em;" type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        <button id="js-valid" style="font-size: 1em;" type="button" class="btn btn-success">Valider les modifications</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $('#profilUtilDialog').modal('show');
+        $("#profilUtilDialog form #js-valid").on('click', function(e) {
+            e.preventDefault();
+            const formData = serializeObject($('#profilUtilDialog form'));
+            let data = {
+                actif: {}, inactif: {},
+            };
+            for(const [key, value] of Object.entries(formData)) {
+                if(key === 'userid') continue;
+                const [state, code] = key.split('-');
+                if(code) {
+                    data[state][code] = parseInt(value);
+                }
+            }
+            const param = "action=save-profil-data&user=" + parseInt(formData.userid)
+                          + "&json=" + encodeValue(JSON.stringify(data));
+            onChange(param, 'v', '', '');
+        });
+    </script>
+    </th:block>
+</body>

@@ -13,15 +13,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="comptes")
+@Entity(name = "Compte")
+@Table(name = "comptes")
 public class Compte extends NamedEntity {
-String numCpte;
-String dateOuv;
-String dateClot;
+    String numCpte;
+    String dateOuv;
+    String dateClot;
 
- public String getIntitule(){
-     return getLibelle();
- }
+    public String getIntitule() {
+        return getLibelle();
+    }
 
 }
