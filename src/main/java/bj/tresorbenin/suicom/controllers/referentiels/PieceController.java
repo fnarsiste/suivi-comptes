@@ -2,9 +2,7 @@ package bj.tresorbenin.suicom.controllers.referentiels;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
 import bj.tresorbenin.suicom.entities.referentiels.Piece;
-import bj.tresorbenin.suicom.entities.referentiels.Statut;
 import bj.tresorbenin.suicom.services.referentiels.PieceService;
-import bj.tresorbenin.suicom.services.referentiels.StatutService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
