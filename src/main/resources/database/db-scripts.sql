@@ -79,6 +79,8 @@ begin
 	return new;
 end;
 $$;	
+
+-- trg_update_user_agentid
 CREATE OR REPLACE TRIGGER trg_update_user_agentid 
 AFTER INSERT ON agents 
 FOR EACH ROW EXECUTE PROCEDURE fn_update_agent_in_user();
@@ -113,12 +115,38 @@ CREATE OR REPLACE TRIGGER TRG_INSERT_USER_PROFIL
 BEFORE INSERT ON profil_utilisateurs
 FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('profil_utilisateurs', 'PFU', 16);
 
+-- Create all views
+create or replace procedure p_create_views()  
+language plpgsql 
+as $$
+declare 
+	rec record;
+	sql_str character varying;
+	_view character varying;
+begin 
+	for rec in SELECT tablename FROM pg_catalog.pg_tables where schemaname='public' and tableowner = 'postgres' loop 
+		-- raise notice '%', rec.tablename;
+		_view := quote_ident('v_'||rec.tablename);
+		sql_str := 'create or replace view ' || _view
+				||' as select * from '||quote_ident(rec.tablename)
+				||' where date_cessation=''infinity'' order by id desc';
+		execute sql_str; -- USING checked_user, checked_date;
+		raise notice '% created.', _view;
+	end loop;
+end;
+$$;
 
+call p_create_views();
 
 -- mes requetes
 select * from agents a 
 where a.date_cessation = 'infinity' 
 and a.id not in (select u.agent_id from users u where u.date_cessation = 'infinity');
+
+select * from profils p where p.id not in (select pu.profil_id from profil_utilisateurs pu where pu.profil_id = p.id and pu.user_id = 5);
+
+select r1_0.id,r1_0.code,r1_0.date_cessation,r1_0.date_creation,r1_0.libelle,r1_0.modifier_par from profils r1_0 where r1_0.code='DT' and r1_0.date_cessation='Infinity'
+
 
 
 

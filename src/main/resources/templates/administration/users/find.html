@@ -7,7 +7,8 @@
     <th:block th:if="${chk_profil_saved}">
         <script>
             closeModal('profilUtilDialog');
-            msgBox("MaJ effectively aapplied.");
+            const report = [(${report})];
+            msgBox("Mise à jour des profils effectuée avec succès.\n Profils ajoutés : " + report.added + "\n profils supprimés : " + report.removed);
         </script>
     </th:block>
 
@@ -28,9 +29,7 @@
                             <div class="col-md-4"><div class="form-group"><label class="control-label">Matricule</label> <input type="text" class="form-control" readonly th:value="${user.agent.matricule}"></div></div>
                             <div class="col-md-4"><div class="form-group"><label class="control-label">Adresse email</label> <input type="text" class="form-control" readonly th:value="${user.agent.emailAddress}"></div></div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12"><div class="form-group"><input type="text" class="form-control" readonly th:value="${user.fullname}"></div></div>
-                        </div>
+                        <div class="row"><div class="col-md-12"><div class="form-group"><input type="text" class="form-control" readonly th:value="${user.fullname}"></div></div></div>
                         <div class="main-tabs">
                             <div class="tab-6">
                                 <ul class="nav nav-tabs nav-justified">
@@ -63,7 +62,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr th:each="item : ${userRoles}" th:with="name=|actif-${#strings.toLowerCase(item.role.code)}|">
+                                                <tr th:each="item : ${userRoles}" th:with="name=|actif-${#strings.toLowerCase(item.role.code)}|"
+                                                    th:id="${name}" th:data-active="${item.active}" th:data-id="${item.id}">
                                                     <td>[[${item.role.code}]]</td>
                                                     <td>[[${item.role.libelle}]]</td>
                                                     <td>[[${#calendars.format(item.dateCreation,'dd/MM/yyyy')}]]</td>
@@ -128,16 +128,20 @@
             e.preventDefault();
             const formData = serializeObject($('#profilUtilDialog form'));
             let data = {
-                actif: {}, inactif: {},
+                actif: [], inactif: [],
             };
-            for(const [key, value] of Object.entries(formData)) {
+            //debugger;
+            for(let [key, value] of Object.entries(formData)) {
                 if(key === 'userid') continue;
                 const [state, code] = key.split('-');
                 if(code) {
-                    data[state][code] = parseInt(value);
+                    value = parseInt(value);
+                    const {active, id} = state==='actif' ? $('tr#'+key).data() : {active: value, id:-1};
+                    data[state].push({role: code, id, userval: value, currval: active ? 1 : 0});
                 }
             }
-            const param = "action=save-profil-data&user=" + parseInt(formData.userid)
+            const param = "action=save-profil-data"
+                          + "&user=" + parseInt(formData.userid)
                           + "&json=" + encodeValue(JSON.stringify(data));
             onChange(param, 'v', '', '');
         });

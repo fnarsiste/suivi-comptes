@@ -5,10 +5,7 @@ import bj.tresorbenin.suicom.entities.administration.Role;
 import bj.tresorbenin.suicom.entities.administration.User;
 import bj.tresorbenin.suicom.entities.administration.UserRole;
 import bj.tresorbenin.suicom.entities.referentiels.Agent;
-import bj.tresorbenin.suicom.services.administration.RoleService;
-import bj.tresorbenin.suicom.services.administration.UserRoleService;
-import bj.tresorbenin.suicom.services.administration.UtilisateurService;
-import bj.tresorbenin.suicom.services.referentiels.AgentService;
+import bj.tresorbenin.suicom.services.administration.UserService;
 import bj.tresorbenin.suicom.utils.JavaUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -29,22 +26,13 @@ import static bj.tresorbenin.suicom.utils.JavaUtils.getParams;
 @Controller
 @SuppressWarnings("all")
 @RequestMapping("/{APP_module:administration}/{APP_directory:users}")
-public class UtilisateurController extends MasterController<User> {
+public class UserController extends MasterController<User> {
     @Autowired
-    private UtilisateurService userService;
-
-    @Autowired
-    private AgentService agentService;
-
-    @Autowired
-    private UserRoleService userRoleService;
-
-    @Autowired
-    private RoleService roleService;
+    private UserService userService;
 
     @Override
     protected void initForm(Model model, String id) throws Exception {
-        List<Agent> agents = agentService.getAccountableAgent();
+        List<Agent> agents = userService.getAgentService().getAccountableAgent();
         model.addAttribute("agents", agents);
         model.addAttribute("show_form", !agents.isEmpty());
         super.initForm(model, id);
@@ -69,7 +57,7 @@ public class UtilisateurController extends MasterController<User> {
 
     @Override
     public void beforePersist(User entity) throws Exception {
-        Agent agent = agentService.get(entity.getAgent().getId());
+        Agent agent = userService.getAgentService().get(entity.getAgent().getId());
         entity.setAgent(agent);
         entity.setOtpCode(JavaUtils.generateOtpCode(6));
         agent.setUser(entity);
@@ -103,32 +91,35 @@ public class UtilisateurController extends MasterController<User> {
     protected void find(Model model, HttpServletRequest request, Map<String, String> params) {
         String action = getParams(params, "action");
         model.addAttribute("ACTION", action);
+        User user;
         switch (action) {
             case "show-profil":
                 long id = Long.parseLong(getParams(params, "userid"));
-                User user = userService.get(id);
+                user = userService.get(id);
+                List<UserRole> userRoles = userService.getRoleByUser(user);
+                List<Role> notActiveRoles = userService.getNotActiveRoleByUser(user);
                 model.addAttribute("user", user);
-                List<UserRole> userRoles = userRoleService.findByUser(user);
                 model.addAttribute("userRoles", userRoles);
                 model.addAttribute("hasRole", !userRoles.isEmpty());
-                List<Role> notActiveRoles = roleService.getNotActiveRoleByUser(user);
                 model.addAttribute("notActiveRoles", notActiveRoles);
                 model.addAttribute("hasInactRole", !notActiveRoles.isEmpty());
                 model.addAttribute("chk_show_profil_dialog", true);
                 break;
-            case "save-profil-data" :
+            case "save-profil-data":
                 log.info(params.toString());
-                JSONObject jsonObject = null;
+                JSONObject jsonParam = null;
                 try {
-                    jsonObject = (JSONObject) (new JSONParser()).parse(getParams(params, "json"));
+                    String userId = getParams(params, "user");
+                    jsonParam = (JSONObject) (new JSONParser()).parse(getParams(params, "json"));
+                    JSONObject report = new JSONObject(userService.saveUserRoles(userId, jsonParam));
+                    model.addAttribute("report", report);
+                    model.addAttribute("chk_profil_saved", true);
                 } catch (Exception e) {
+                    log.info(e.getMessage());
                     model.addAttribute("HAS_ERROR", !true);
                     model.addAttribute(CATCH_ERROR, true);
                     model.addAttribute("ERROR_TXT_MSG", e.getMessage());
-                    break;
                 }
-                log.info(jsonObject.toJSONString());
-                model.addAttribute("chk_profil_saved", true);
                 break;
         }
         internView(model);
