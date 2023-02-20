@@ -38,7 +38,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Long> {
      * @return Optional&lt;T&gt; record identified
      */
     @Query("FROM #{#entityName} WHERE code = ?1 AND dateCessation = 'Infinity'")
-    Optional<T> findByCode(String code);
+    Optional<T> getByCode(String code);
 
     /**
      * Returns the list of not dead records in the linked table.

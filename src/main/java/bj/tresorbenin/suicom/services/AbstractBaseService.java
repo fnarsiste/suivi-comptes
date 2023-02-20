@@ -42,7 +42,7 @@ public abstract class AbstractBaseService<E> {
     }
 
     public E getByCode(String code) {
-        return getRepository().findByCode(code).orElse(null);
+        return getRepository().getByCode(code.toUpperCase()).orElse(null);
     }
 
     public List<E> getAll() {
