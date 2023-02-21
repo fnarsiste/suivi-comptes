@@ -115,6 +115,15 @@ CREATE OR REPLACE TRIGGER TRG_INSERT_USER_PROFIL
 BEFORE INSERT ON profil_utilisateurs
 FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('profil_utilisateurs', 'PFU', 16);
 
+CREATE OR REPLACE TRIGGER TRG_INSERT_PIECE
+BEFORE INSERT ON pieces
+FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('pieces', 'P', 0);
+
+CREATE OR REPLACE TRIGGER TRG_INSERT_STRUCT_TITUL
+BEFORE INSERT ON structures_titulaires
+FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('structures_titulaires', 'STL', 0);
+
+
 -- Create all views
 create or replace procedure p_create_views()  
 language plpgsql 
