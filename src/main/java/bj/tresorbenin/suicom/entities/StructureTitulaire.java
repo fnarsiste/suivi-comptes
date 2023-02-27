@@ -30,4 +30,8 @@ public class StructureTitulaire extends NamedEntity {
         return getLibelle();
     }
 
+    public String getFullname() {
+        return getCode() + " - " + getLibelle();
+    }
+
 }

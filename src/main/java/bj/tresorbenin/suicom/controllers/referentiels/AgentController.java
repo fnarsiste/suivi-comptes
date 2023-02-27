@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -31,6 +32,9 @@ public class AgentController extends MasterController<Agent> {
 
     @Override
     protected void initForm(Model model, String id) throws Exception {
+        List<StructureTitulaire> structureTitulaires = structureTitulaireService.getAll();
+        model.addAttribute("structures", structureTitulaires);
+        //model.addAttribute("show_form", !structureTitulaires.isEmpty());
         super.initForm(model, id);
     }
 
@@ -53,7 +57,12 @@ public class AgentController extends MasterController<Agent> {
 
     @Override
     public void insert(Model model, Agent form) throws Exception {
-        StructureTitulaire stl=structureTitulaireService.getById(1L);
+
+        StructureTitulaire stl = new StructureTitulaire();
+        if(form.getStructureTitulaire()!=null)
+            stl=structureTitulaireService.getById(form.getStructureTitulaire().getId());
+        if(stl!=null)
+            form.setStructureTitulaire(stl);
         agentService.create(form);
         redirectView();
     }

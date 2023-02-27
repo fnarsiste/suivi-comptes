@@ -1,5 +1,6 @@
 package bj.tresorbenin.suicom.entities.referentiels;
 
+import bj.tresorbenin.suicom.entities.StructureTitulaire;
 import bj.tresorbenin.suicom.entities.administration.User;
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.Comment;
         indexes = {
                 @Index(name = "agt_code_ix", columnList = "code"),
                 @Index(name = "agt_matricule_ix", columnList = "matricule"),
-                @Index(name = "agt_nom_ix", columnList = "nom"),
+                @Index(name = "agt_nom_ix", columnList = "noms"),
                 @Index(name = "agt_prenom_ix", columnList = "prenoms"),
                 @Index(name = "agt_email_ix", columnList = "email")
         },
@@ -32,7 +33,7 @@ public class Agent extends BaseEntity {
     String matricule;
 
     @Comment("Nom agent")
-    @Column(name = "nom", length = 64, nullable = false)
+    @Column(name = "noms", length = 64, nullable = false)
     String lastName;
 
     @Comment("Prénoms agent")
@@ -49,6 +50,8 @@ public class Agent extends BaseEntity {
 
     @OneToOne(optional = false, mappedBy = "agent", cascade = CascadeType.ALL)
     private User user;
+
+    private StructureTitulaire structureTitulaire;
 
     public String getFullnameCombo() {
         return String.format("%s - %s %s", getMatricule(), getFirstName(), getLastName());
