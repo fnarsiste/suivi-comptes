@@ -1,5 +1,6 @@
 package bj.tresorbenin.suicom.entities;
 
+import bj.tresorbenin.suicom.entities.administration.User;
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import bj.tresorbenin.suicom.entities.referentiels.Statut;
 import jakarta.persistence.*;
@@ -50,7 +51,9 @@ public class Demande extends BaseEntity {
     //@ManyToOne(optional = false,cascade = CascadeType.ALL)
     //@JoinColumn(name = "id")
     Statut statut;
-   @OneToOne(optional = false, mappedBy = "fiche", cascade = CascadeType.ALL)
-    Fiche fiche;
+
+
+   @OneToOne(optional = false, mappedBy = "demande", cascade = CascadeType.ALL)
+    private Fiche fiche;
 
 }
