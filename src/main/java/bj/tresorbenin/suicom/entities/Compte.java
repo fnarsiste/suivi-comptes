@@ -19,6 +19,7 @@ public class Compte extends NamedEntity {
     String numCpte;
     String dateOuv;
     String dateClot;
+    LettreAutorisation autorisation;
 
     public String getIntitule() {
         return getLibelle();

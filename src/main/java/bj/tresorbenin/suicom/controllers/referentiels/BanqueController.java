@@ -62,6 +62,7 @@ public class BanqueController extends MasterController<Banque> {
     @Override
     public void delete(Model model, Object id) throws Exception {
         banqueService.delete(Long.valueOf(id.toString()));
+        redirectView();
     }
 
     @Override

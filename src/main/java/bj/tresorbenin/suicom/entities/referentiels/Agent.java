@@ -18,9 +18,9 @@ import org.hibernate.annotations.Comment;
         indexes = {
                 @Index(name = "agt_code_ix", columnList = "code"),
                 @Index(name = "agt_matricule_ix", columnList = "matricule"),
-                @Index(name = "fct_nom_ix", columnList = "noms"),
-                @Index(name = "fct_prenom_ix", columnList = "prenoms"),
-                @Index(name = "fct_email_ix", columnList = "email"),
+                @Index(name = "agt_nom_ix", columnList = "nom"),
+                @Index(name = "agt_prenom_ix", columnList = "prenoms"),
+                @Index(name = "agt_email_ix", columnList = "email")
         },
         uniqueConstraints = {
                 @UniqueConstraint(name = "agents_uk", columnNames = {"code", "date_cessation"})
@@ -31,8 +31,8 @@ public class Agent extends BaseEntity {
     @Column(length = 20, nullable = false)
     String matricule;
 
-    @Comment("Noms agent")
-    @Column(name = "noms", length = 64, nullable = false)
+    @Comment("Nom agent")
+    @Column(name = "nom", length = 64, nullable = false)
     String lastName;
 
     @Comment("Prénoms agent")
@@ -43,6 +43,7 @@ public class Agent extends BaseEntity {
     @Comment("Adresse email agent")
     String emailAddress;
 
+    @Column(name = "adresse_agent", length = 255)
     @Comment("Adresse agent")
     String adresse;
 

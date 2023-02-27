@@ -123,6 +123,18 @@ CREATE OR REPLACE TRIGGER TRG_INSERT_STRUCT_TITUL
 BEFORE INSERT ON structures_titulaires
 FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('structures_titulaires', 'STL', 0);
 
+CREATE OR REPLACE TRIGGER TRG_INSERT_AUTORISATION
+BEFORE INSERT ON autorisations
+FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('autorisations', 'AU', 0);
+
+CREATE OR REPLACE TRIGGER TRG_INSERT_DEMANDE
+BEFORE INSERT ON demandes
+FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('demandes', 'DE', 0);
+
+CREATE OR REPLACE TRIGGER TRG_INSERT_FICHE
+BEFORE INSERT ON fiches
+FOR EACH ROW EXECUTE PROCEDURE fn_create_trigger_table('fiches', 'FI', 0);
+
 
 -- Create all views
 create or replace procedure p_create_views()  

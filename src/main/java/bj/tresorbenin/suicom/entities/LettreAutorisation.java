@@ -20,4 +20,5 @@ public class LettreAutorisation extends BaseEntity {
     String dateLettre;
     String lieu;
     String limites;
+    //Demande demande;
 }

@@ -39,4 +39,5 @@ public class ConstantUtils {
     public final static String MSG_OPERATION_UPDATE = "UPDATE_SUCCES";
     public final static String MSG_OPERATION_DIFFERE = "DIFFERE_SUCCES";
     public static final String MODEL_ATTRIBUTE_POPUP_OPERATION = "POPUP_OPERATION";
+    public static final String STATUT_DEMANDE_SAISIE = "SAI";
 }

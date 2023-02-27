@@ -1,10 +1,7 @@
 package bj.tresorbenin.suicom.entities.referentiels;
 
 import bj.tresorbenin.suicom.entities.base.NamedEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
@@ -28,6 +25,7 @@ import org.hibernate.annotations.Comment;
 public class Banque extends NamedEntity {
 
     @Comment("Adresse de la banque")
+    @Column(name = "adresse_banque", length = 255)
     private String adresse;
 
     /*@Override

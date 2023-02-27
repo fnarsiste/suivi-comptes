@@ -1,7 +1,9 @@
 package bj.tresorbenin.suicom.controllers.referentiels;
 
 import bj.tresorbenin.suicom.controllers.MasterController;
+import bj.tresorbenin.suicom.entities.StructureTitulaire;
 import bj.tresorbenin.suicom.entities.referentiels.Agent;
+import bj.tresorbenin.suicom.services.StructureTitulaireService;
 import bj.tresorbenin.suicom.services.referentiels.AgentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,8 @@ import java.util.Map;
 public class AgentController extends MasterController<Agent> {
     @Autowired
     private AgentService agentService;
+    @Autowired
+    private StructureTitulaireService structureTitulaireService;
 
     @Override
     public void beforePersist(Agent entity) throws Exception {
@@ -49,6 +53,7 @@ public class AgentController extends MasterController<Agent> {
 
     @Override
     public void insert(Model model, Agent form) throws Exception {
+        StructureTitulaire stl=structureTitulaireService.getById(1L);
         agentService.create(form);
         redirectView();
     }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{mainlayout.html}">
+<body >
+<section layout:fragment="core-content">
+    <div class="row" th:replace="~{fragments/includes.html :: newEntityButtonArea}"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatable-buttons" class="table table-striped table-bordered w-100">
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Dénomination</th>
+                            <th>Adresse</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="structure : ${List}">
+                                <td><b th:text="${structure.code}">ABC</b></td>
+                                <td th:text="${structure.libelle}">Banque Fiction</td>
+                                <td th:text="${structure.adresse}">Cotonou</td>
+                                <td style="white-space: nowrap; width: 15%;">
+                                    <div class="btn-group btn-group-sm" style="float: none;">
+                                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{|/referentiels/structures/${structure.id}/modifier|}"><span class="ti-pencil"></span></a>
+                                        <a href="" class="js-app-button-delete tabledit-delete-button btn btn-sm btn-danger ml-2"
+                                           style="float: none; margin: 5px;" th:data-id="${structure.id}" data-token="1234567890" th:data-href="@{'/referentiels/structures/'}"><span class="ti-trash"></span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    Notes : 
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        TABLE_SORTING = 1;
+        function runOnceAllLoaded() {
+            console.log("Liste des structures titulaires chargées.");
+        }
+    </script>
+</section>
+</body>
+</html>
