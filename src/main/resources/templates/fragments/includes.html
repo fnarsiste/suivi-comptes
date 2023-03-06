@@ -45,5 +45,58 @@
            </div>
        </div>
    </div>
+
+   <div th:fragment="periodBar" class="row">
+       <div class="col-lg-12">
+<!--           <div class="form-horizontal box" style="margin-top: 20px">-->
+           <div class="card">
+               <div class="card-body">
+                    <div id="daterange" class="form-group row">
+                           <!-- Date debut de recherche -->
+                           <label for="date-debut" class="my-2 py-1 control-label" th:text="#{MSG.date.periode.debut}"></label>
+                           <div class="col-sm-2">
+                               <input class="form-control" type="date" autocomplete="off" th:value="${DATE_DEBUT}" placeholder="jj/mm/aaaa" id="date-debut">
+                           </div>
+
+
+                           <!-- Date fin de recherche -->
+                           <label for="date-fin" class="my-2 py-1 control-label" th:text="#{MSG.date.periode.fin}"> </label>
+                           <div class="col-sm-2">
+                               <input type="date" class="form-control" th:value="${DATE_FIN}" autocomplete="off"  id="date-fin" placeholder="jj/mm/aaaa" />
+                           </div>
+
+                           <!-- Boutons de recherche de recherche -->
+                           <div class="col-sm-3">
+                               <button type="button" id="search" class="btn btn-bleu-inv no-shadow btn-sm">
+                                   <span class="fa fa-search" th:text="#{MSG.btn.filtrer}"></span>
+                               </button>
+                           </div>
+                   </div>
+               </div>
+           </div>
+<!--           </div>-->
+
+           <!-- Messages d'erreur -->
+           <div id="error-box" class="error global-error" style="margin-top: 5px"></div>
+           <script type="text/javascript">
+                $(document).ready(function() {
+                    /** hide entete error div **/
+                   // $('#first-err-div').hide();
+                    //$('#second-err-div').hide();
+
+                    // Formatage des dates
+                    initDualDatePicker("#daterange", "#date-debut, #date-fin");
+                });
+                function initDualDatePicker(container, dateInputs, data) {
+                    let defaults = getDatePickerDefaults();
+                    defaults['inputs'] = $(getEltSelector(dateInputs));
+
+                    let options = $.extend({}, defaults, data);
+
+                    $(getEltSelector(container)).datepicker(options);
+                }
+           </script>
+       </div>
+   </div>
 </body>
 </html>

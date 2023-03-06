@@ -49,6 +49,11 @@ public abstract class AbstractBaseService<E> {
         return toList(getRepository().getAll());
     }
 
+    /* Essai de filtrer par période
+    public List<E> getByPeriode(String dateDebut, String dateFin) {
+        return toList(getRepository().getByPeriode(dateDebut, dateFin));
+    }
+    */
     protected List<E> toList(Set<E> set) {
         return new ArrayList<>(new HashSet<>(set));
     }

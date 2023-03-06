@@ -16,10 +16,10 @@ import lombok.Setter;
 @Entity(name = "Compte")
 @Table(name = "comptes")
 public class Compte extends NamedEntity {
-    String numCpte;
-    String dateOuv;
-    String dateClot;
-    LettreAutorisation autorisation;
+    private String numCpte;
+    private String dateOuv;
+    private String dateClot;
+    private LettreAutorisation autorisation;
 
     public String getIntitule() {
         return getLibelle();

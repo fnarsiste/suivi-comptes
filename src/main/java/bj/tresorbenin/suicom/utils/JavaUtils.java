@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @SuppressWarnings("all")
@@ -126,5 +128,18 @@ public class JavaUtils {
             code += ""+random.nextInt(0, 10);
         }
         return code;
+    }
+
+    public static Map<String, String> getSearchPeriode(String dateDebut, String dateFin) {
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        if (!notNullString(dateDebut) || dateDebut.equals("undefined"))
+            // dateDebut = "01/01/"+(annee-1);
+            dateDebut = today;
+        if (!notNullString(dateFin) || dateFin.equals("undefined"))
+            dateFin = today;
+        Map<String, String> period = new HashMap<>();
+        period.put("dateDebut", dateDebut);
+        period.put("dateFin", dateFin);
+        return period;
     }
 }

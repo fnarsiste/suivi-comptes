@@ -404,6 +404,10 @@ function doAjax(v_url, v_data, v_type, cible, format, prop_cible, onSuccess, onE
 	}
 }
 
+function applyRemoveItemListener(){
+    $('.js-app-button-delete').off().on('click', function (e) {appDeleteListeRow(this, e)});
+}
+
 $(document).ready(function(){
    // Initalize data table with buttons
    const table = $('#datatable-buttons').DataTable({
@@ -420,7 +424,7 @@ $(document).ready(function(){
    $('body').on('submit', '#form, #'+$(document.myform).attr('id'), function (e) {doSubmitForm(this, e);});
 
    // Ecoute sur les boutons de suppression sur les listes de données
-   $('.js-app-button-delete').on('click', function (e) {appDeleteListeRow(this, e)});
+   applyRemoveItemListener();
     // Convertir en maj les champs tagués de 'js-to-upper'
    $('.js-to-upper').on('change', function (){$(this).val($(this).val().toUpperCase());});
 

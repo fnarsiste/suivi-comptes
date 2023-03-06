@@ -15,8 +15,8 @@ import lombok.Setter;
 @Entity(name = "ReleveCompte")
 @Table(name="releves_comptes")
 public class ReleveCompte extends BaseEntity {
-    String numReleve;
-    String solde;
-    String date;
+    private String numReleve;
+    private String solde;
+    private String date;
 
 }

@@ -15,10 +15,10 @@ import lombok.Setter;
 @Entity(name = "LettreAutorisation")
 @Table(name="autorisations")
 public class LettreAutorisation extends BaseEntity {
-    String refLettre;
-    String objet;
-    String dateLettre;
-    String lieu;
-    String limites;
-    //Demande demande;
+    private String refLettre;
+    private String objet;
+    private String dateLettre;
+    private String lieu;
+    private String limites;
+    //private Demande demande;
 }

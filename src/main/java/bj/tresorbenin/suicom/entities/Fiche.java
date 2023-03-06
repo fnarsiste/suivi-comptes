@@ -26,13 +26,14 @@ import java.util.Date;
 public class Fiche extends BaseEntity {
     @Column(nullable = false)
     @Comment("Date de création de la fiche")
-    Date dateFiche;
+    private Date dateFiche;
+
     @Comment("Recommandations issues du traitement de la demande")
-    String observations;
+    private String observations;
 
 
-    @OneToOne(optional=false)
-    @JoinColumn(name="demande_id", unique=true, nullable=false)
-    Demande demande;
+    //@OneToOne(optional=false)
+    //@JoinColumn(name="demande_id", unique=true, nullable=false)
+    private Demande demande;
 
 }

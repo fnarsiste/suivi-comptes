@@ -30,30 +30,33 @@ public class Demande extends BaseEntity {
     /*@Column(nullable = false, length = 128)
     @Comment("reference de la demande")
     String reference;*/
+
     @Column(nullable = false,length = 255)
-    @Comment("l'objet de la demande")
-    String objet;
+    @Comment("Objet de la demande")
+    private String objet;
+
     @Column(nullable = false)
     @Comment("Date de la demande")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date dateDemande;
+    private Date dateDemande;
+
     @Column(length = 128)
     @Comment("lieu de la demande")
-    String lieu;
+    private String lieu;
 
     @Comment("Structure bénéficiaire")
     //@ManyToOne(optional = false,cascade = CascadeType.ALL)
    // @JoinColumn(name = "id")
-    StructureTitulaire structureTitulaire;
+    private StructureTitulaire structureTitulaire;
 
 
     @Comment("Statut: Saisie, accord,  refus ou accord exceptionnel")
     //@ManyToOne(optional = false,cascade = CascadeType.ALL)
     //@JoinColumn(name = "id")
-    Statut statut;
+    private Statut statut;
 
 
-   @OneToOne(optional = false, mappedBy = "demande", cascade = CascadeType.ALL)
+   //@OneToOne(optional = false, mappedBy = "demande", cascade = CascadeType.ALL)
     private Fiche fiche;
 
 }

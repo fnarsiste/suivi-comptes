@@ -24,7 +24,7 @@ public class StructureTitulaire extends NamedEntity {
     //String codeStruct;
     @Comment("Adresse de la structure titulaire")
     @Column(name = "adresse_structure", length = 255)
-    String adresse;
+    private String adresse;
 
     public String getDenomination() {
         return getLibelle();

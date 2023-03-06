@@ -40,6 +40,8 @@ public interface BaseRepository<T> extends JpaRepository<T, Long> {
     @Query("FROM #{#entityName} WHERE code = ?1 AND dateCessation = 'Infinity'")
     Optional<T> getByCode(String code);
 
+
+
     /**
      * Returns the list of not dead records in the linked table.
      * @return Set&lt;T&gt; records
