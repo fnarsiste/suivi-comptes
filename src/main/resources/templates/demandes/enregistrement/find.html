@@ -28,10 +28,13 @@
                 <td th:text="${dem.statut.libelle}">Saisie</td>
                 <td style="white-space: nowrap; width: 15%;">
                     <div class="btn-group btn-group-sm" style="float: none;">
-                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{|/demandes/enregistrement/${dem.id}/modifier|}"><span class="ti-pencil"></span></a>
-                        <a href="" class="js-app-button-delete tabledit-delete-button btn btn-sm btn-danger ml-2"
+                        <a th:if="${dem.statut.code==STATUT_DEM_SAISIE}"  class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{|/demandes/enregistrement/${dem.id}/modifier|}"><span class="ti-pencil"></span></a>
+                        <a th:if="${dem.statut.code==STATUT_DEM_SAISIE}" href="" class="js-app-button-delete tabledit-delete-button btn btn-sm btn-danger ml-2"
                            style="float: none; margin: 5px;" th:data-id="${dem.id}" data-token="1234567890" th:data-href="@{'/demandes/enregistrement/'}"><span class="ti-trash"></span></a>
-                        <button>Fiche</button>
+
+                        <a class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{|/demandes/traitement/${dem.id}/modifier|}"><span class="btn btn-info waves-effect waves-light">Fiche </span></a>
+                        <a th:if="${dem.statut.code!=STATUT_DEM_SAISIE}" class="tabledit-edit-button btn btn-sm btn-info" style="float: none; margin: 5px;" th:href="@{|/demandes/resultat/${dem.id}/modifier|}" ><span class="btn btn-info waves-effect waves-light">Résultat</span></a>
+
                     </div>
                 </td>
             </tr>

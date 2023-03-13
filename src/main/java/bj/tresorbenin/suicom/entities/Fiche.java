@@ -29,7 +29,7 @@ public class Fiche extends BaseEntity {
     private Date dateFiche;
 
     @Comment("Recommandations issues du traitement de la demande")
-    private String observations;
+    private String recommandations;
 
 
     //@OneToOne(optional=false)

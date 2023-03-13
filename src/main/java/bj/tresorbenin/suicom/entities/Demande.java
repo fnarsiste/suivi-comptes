@@ -1,6 +1,5 @@
 package bj.tresorbenin.suicom.entities;
 
-import bj.tresorbenin.suicom.entities.administration.User;
 import bj.tresorbenin.suicom.entities.base.BaseEntity;
 import bj.tresorbenin.suicom.entities.referentiels.Statut;
 import jakarta.persistence.*;
@@ -22,15 +21,19 @@ import java.util.Date;
         indexes = {
             @Index(name = "de_code_ix", columnList = "code")
             //,@Index(name = "de_reference_ix", columnList = "reference")
+                ,@Index(name = "de_referenceFiche_ix", columnList = "referenceFiche")
+                ,@Index(name = "de_refLettre_ix", columnList = "refLettre")
         },
         uniqueConstraints = {
                 @UniqueConstraint(name = "DEMANDE_UK", columnNames = {"code", "date_cessation"})
         })
-public class Demande extends BaseEntity {
-    /*@Column(nullable = false, length = 128)
-    @Comment("reference de la demande")
-    String reference;*/
 
+public class Demande extends BaseEntity {
+    /*
+    @Column(nullable = false, length = 128)
+    @Comment("reference de la demande")
+    String reference;
+    */
     @Column(nullable = false,length = 255)
     @Comment("Objet de la demande")
     private String objet;
@@ -57,6 +60,46 @@ public class Demande extends BaseEntity {
 
 
    //@OneToOne(optional = false, mappedBy = "demande", cascade = CascadeType.ALL)
-    private Fiche fiche;
+    //private Fiche fiche;                // A enlever après
+
+
+
+                                            /**********Fiche********/
+
+    @Column(length = 128)
+    @Comment("reference de la fiche")
+    String referenceFiche;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Comment("Date de création de la fiche")
+    private Date dateFiche;
+
+    @Column(length = 1024)
+    @Comment("Recommandations issues du traitement de la demande")
+    private String recommandations;
+
+
+                                    /**********Lettre d'autorisation********/
+
+    @Column(length = 128)
+    @Comment("reference de la lettre d'autorisation")
+    private String refLettre;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Comment("Date de la lettre d'autorisation")
+    private String dateLettre;
+
+    @Column(length = 255)
+    @Comment("Objet de la lettre d'autorisation")
+    private String objetLettre;
+
+    @Column(length = 1024)
+    @Comment("Limites de l'autorisation ")
+    private String limites;
+
+
+    @Column(length = 128)
+    @Comment("lieu de la lettre d'autorisation")
+    private String lieuLettre;
 
 }

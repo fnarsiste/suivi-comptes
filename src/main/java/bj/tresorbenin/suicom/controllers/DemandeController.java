@@ -21,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,8 @@ import static bj.tresorbenin.suicom.utils.JavaUtils.getParams;
 @Controller
 @SuppressWarnings("all")
 
-@RequestMapping("/{APP_module:demandes}/{APP_directory:enregistrement}")
+@RequestMapping("/{APP_module:demandes}/{APP_directory:enregistrement|traitement|resultat}")
+//@SessionAttributes({"STATUT_DEMANDE_SAISIE"})
 public class DemandeController extends MasterController<Demande>{
 
     @Autowired
@@ -62,12 +65,22 @@ public class DemandeController extends MasterController<Demande>{
 
     @Override
     protected void showUpdateForm(Model model, Demande entity) throws Exception {
-        pageTitle = "MSG.title.demandes.edit";
+        if(APP_directory.equals("enregistrement"))
+            pageTitle = "MSG.title.demandes.edit";
+        else if(APP_directory.equals("traitement"))
+            pageTitle = "MSG.title.fiches.edit";
+        else if(APP_directory.equals("resultat")){
+            pageTitle = "MSG.title.resultats.edit";
+            //List<String> codesStatutsResultat = ConstantUtils.getStatutsResultat();
+            model.addAttribute("STATUTS_RESULTATS", getStatutsOfDemandesResults());
+        }
+        APP_directory="enregistrement";
     }
 
     @Override
     public void showList(Model model) throws Exception {
         pageTitle = "MSG.title.demandes.list";
+        model.addAttribute("STATUT_DEM_SAISIE",ConstantUtils.STATUT_DEMANDE_SAISIE);
         entities = demandeService.getAll();
         super.showList(model);
     }
@@ -79,6 +92,7 @@ public class DemandeController extends MasterController<Demande>{
         String dateFin;
 
         model.addAttribute("ACTION", action);
+        model.addAttribute("STATUT_DEM_SAISIE",ConstantUtils.STATUT_DEMANDE_SAISIE);
         switch (action) {
             case "search":
                 dateDebut= getParams(params, "dateDebut");
@@ -86,10 +100,14 @@ public class DemandeController extends MasterController<Demande>{
                 if(JavaUtils.notNullString(dateDebut) && JavaUtils.notNullString(dateFin)){
                     //
                     entities=demandeService.searchByPeriod(dateDebut, dateFin);
+                    //model.addAttribute("LIST", entities);
                     model.addAttribute("DATE_DEBUT", dateDebut);
-                    model.addAttribute("LIST", entities);
                     model.addAttribute("DATE_FIN", dateFin);
-                }
+                }else
+                    entities=demandeService.getAll();
+                model.addAttribute("LIST", entities);
+                model.addAttribute("STATUT_DEMANDE_SAISIE",ConstantUtils.STATUT_DEMANDE_SAISIE);
+
                 break;
         }
         internView(model);
@@ -103,18 +121,13 @@ public class DemandeController extends MasterController<Demande>{
     @Override
     public void insert(Model model, Demande form) throws Exception {
         Statut statut=statutService.getByCode(ConstantUtils.STATUT_DEMANDE_SAISIE);
-        if(statut==null) throw new Exception("Pas d'enregistrement de type nouveau statut");
+        if(statut==null) throw new Exception("Pas d'enregistrement de type Demande saisie");
          //StructureTitulaire structureTitulaire=sttService.getByCode("TDATL");
-
-
-
        StructureTitulaire stl = new StructureTitulaire();
         if(form.getStructureTitulaire()!=null)
             stl=sttService.getById(form.getStructureTitulaire().getId());
         if(stl!=null)
             form.setStructureTitulaire(stl);
-
-
         //if(structureTitulaire==null) throw new Exception("TDATL n'existe pas");
         form.setStatut(statut);
         //form.setStructureTitulaire(structureTitulaire);
@@ -126,11 +139,39 @@ public class DemandeController extends MasterController<Demande>{
     @Override
     public void update(Model model, Demande form) throws Exception {
         Statut statut = new Statut();
-        if(form.getStatut()!=null)
+        Demande demande=new Demande();
+        if(APP_directory.equals("enregistrement")) {
+            if (form.getStatut() != null)
+                statut = statutService.getById(form.getStatut().getId());
+            if (statut != null)
+                form.setStatut(statut);
+            demandeService.update(form);
+            redirectView();
+        } else if (APP_directory.equals("traitement")) {
+            demande=demandeService.getById(form.getId());
+            statut=statutService.getByCode(ConstantUtils.STATUT_DEMANDE_TRAITEE);
+            if(statut==null) throw new Exception("Pas d'enregistrement de type Demande traitée");
+            demande.setStatut(statut);
+            demande.setReferenceFiche(form.getReferenceFiche());
+            demande.setDateFiche(form.getDateFiche());
+            demande.setRecommandations(form.getRecommandations());
+            demandeService.update(demande);
+            //redirectOtherModuleView(APP_module+"/enregistrement/liste");
+            APP_directory="enregistrement";
+        } else if (APP_directory.equals("resultat")) {
+            demande=demandeService.getById(form.getId());
             statut=statutService.getById(form.getStatut().getId());
-        if(statut!=null)
-            form.setStatut(statut);
-        demandeService.update(form);
+            if(statut==null) throw new Exception("Pas de statut de résultat");
+            demande.setStatut(statut);
+            demande.setRefLettre(form.getRefLettre());
+            demande.setDateLettre(form.getDateLettre());
+            demande.setObjetLettre(form.getObjetLettre());
+            demande.setLimites(form.getLimites());
+            demande.setLieuLettre(form.getLieuLettre());
+            demandeService.update(demande);
+            //redirectOtherModuleView(APP_module+"/enregistrement/liste");
+            APP_directory="enregistrement";
+        }
         redirectView();
     }
 
@@ -141,5 +182,16 @@ public class DemandeController extends MasterController<Demande>{
     @Override
     public Demande getById(Object id) {
         return demandeService.get(id);
+    }
+    public List<Statut> getStatutsOfDemandesResults(){
+        List<Statut> statutsList=new ArrayList<Statut>();
+        Statut statut = null;
+        for (String codeStatut:ConstantUtils.getStatutsResultat()) {
+            if(JavaUtils.notNullString(codeStatut))
+                statut=statutService.getByCode(codeStatut);
+            if(statut!=null)
+                statutsList.add(statut);
+        }
+        return statutsList;
     }
 }

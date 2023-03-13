@@ -1,5 +1,8 @@
 package bj.tresorbenin.suicom.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConstantUtils {
     public static final String MASTER_ACTION = "MASTER_ACTION";
     public static final String MASTER_SETUP = "MASTER_SETUP";
@@ -40,4 +43,14 @@ public class ConstantUtils {
     public final static String MSG_OPERATION_DIFFERE = "DIFFERE_SUCCES";
     public static final String MODEL_ATTRIBUTE_POPUP_OPERATION = "POPUP_OPERATION";
     public static final String STATUT_DEMANDE_SAISIE = "SAI";
+    public static final String STATUT_DEMANDE_TRAITEE = "TRT";
+    public static final String STATUT_AUTORISATION_ACCORD = "ACC";
+    public static final String STATUT_AUTORISATION_ACCORD_EXCEPTIONNEL = "EXC";
+    public static final String STATUT_AUTORISATION_REFUS = "REF";
+
+    public static List<String> getStatutsResultat() {
+        //return new ArrayList<String>(List.of("ACC", "EXC", "REF"));
+        //new ArrayList<String>(List.of(new String[]{"ACC", "EXC", "REF"}));
+        return List.of(STATUT_AUTORISATION_ACCORD, STATUT_AUTORISATION_ACCORD_EXCEPTIONNEL, STATUT_AUTORISATION_REFUS);
+    }
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{mainlayout.html}">
+<head><title>Traitement d'une demande d'ouverture de compte (Fiche)</title></head>
+<body class="fixed-left">
+<section layout:fragment="core-content">
+    <div class="row" th:replace="~{fragments/includes.html :: formRequiredArea}"></div>
+    <form id="form" name="myform" class="" method="POST" th:action="@{${cible}}" th:object="${Form}">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{statut.id}"/>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group mb-0 row">
+                            <div class="col-lg-3 text-right"><label class="my-2 py-1">Référence Fiche * : </label></div>
+                            <div class="col-lg-9">
+                                <input type="text" th:field="*{referenceFiche}"
+                                        class="form-control js-to-upper" required
+                                        placeholder="Entrer la référence de la fiche"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-0 row">
+                            <div class="col-lg-3 text-right"><label for="date-fiche" class="my-2 py-1">Date * :</label></div>
+                            <div class="col-lg-9">
+                                <input th:field="*{dateFiche}" class="form-control" required type="date" th:value="2023-02-24" placeholder="Entrer la date de la fiche" id="date-fiche">
+                            </div>
+                        </div>
+                        <div class="form-group mb-0 row">
+                            <div class="col-lg-3 text-right"><label class="my-2 py-1">Recommandations * : </label></div>
+                            <div class="col-lg-9">
+                                <textarea style="min-height: 100px; max-height: 150px;"
+                                          th:field="*{recommandations}" class="form-control" required
+                                          rows="5" placeholder="Entrer les recommandations"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div th:replace="~{fragments/includes.html :: formButtonsArea(offset = 3)}" class="card-footer"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function runOnceAllLoaded() {
+            $('#code').focus();
+        }
+    </script>
+</section>
+</body>
+</html>
